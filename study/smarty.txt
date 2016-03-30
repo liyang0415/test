@@ -1,0 +1,487 @@
+1. 问题：
+	项目 30W   5个月    5个  4W    1UI  3UE   1主管 
+
+		1. 需求分析	10天
+			模块
+			数据库分析
+		2. UI设计师---->效果图   15天
+		3. UE前端工程师--->.html 15天
+		4. php工程师------>程序  40天
+		5. 测试(内部) 
+		6. 上线(空间+域名)
+		7. 维护(修改bug、开发新的需求、优化功能)
+		8. 运营
+	问题： 1个月半月程序员在干嘛？
+			1. 开发其他项目
+			2. 养着
+			3. 1个半月后在招php
+
+			模板引擎
+
+就是使php代码和html代码分离的一种解决方案，使程序员和美工各司其职，同时开工，程序员在修改程序的时候不会影响到页面，美工在修改页面的时候不会影响到程序
+		
+	初级项目： html和php进行混编
+		index.php
+
+		<?php foreach($data as $vo)?>
+			<li><?=$vo["name"]?></li>
+		<?php } ?>	
+
+	模板引擎：
+		
+		index.php			index.html
+	
+3. 模版标签
+	
+	1. 静态页面  <a href="http://www.baidu.com">百度</a>
+
+	2. 初级项目  <a href="<?=$url?>"><?php echo $baidu;?></a>
+
+	3. 模版引擎  <a href="{$url}">{$baidu}</a>
+
+			smarty模板引擎
+
+smarty是一个基于PHP开发的PHP模板引擎。它提供了逻辑与外在内容的分离，简单的讲，目的就是要使用PHP程序员同美工分离,使程序员改变程序的逻辑内容不会影响到美工的页面设计，美工重新修改页面不会影响到程序的逻辑，这在多人合作的项目
+
+smarty:
+   优点：
+     1、速度快：smarty的编译性 使smarty调用编译后的文件而不每次都调用模板文件
+     2、插件：smarty可以自己定义丰富的插件
+     3、在smarty中有自己的丰富的 *模版* 控制的结构----->模版标签
+     4、smarty经过编译，缓存后平均运行速度要快
+   坏处:
+	1、中小型的项目不适合
+	2、实时更新数据的网站中不适用
+	3、第一次运行的时候 编译需要时间
+
+
+使用smarty:
+	1.  下载smarty
+		www.smarty.net
+
+	2.  libs目录 复制到你smarty/thinksite/  更名为smarty
+
+		-SmartyBC.class.php       smarty的解析类文件,向后兼容性的包装类
+		-Smarty.class.php         smarty的核心类解析文件
+		/plugins		  smarty的插件目录
+		/sysplugins               smarry的核心插件目录
+
+	3. /thinksite/smarty.inc.php   smarty初始化文件
+		将/thinksite/smarty/SmartyBC.class.php引入到smarty.inc.php
+		      引入smarty解析类
+
+	4. 实例化smartyBC解析类   创建smarty对象
+		$smarty = new  SmartyBC;
+
+	5. smarty运行环境的配置
+		$smarty->template_dir = "./template"; 
+		$smarty->compile_dir = "./comp";
+		$smarty->cache_dir = "./cache";
+		$smarty->config_dir = "./conf";
+	
+		$smarty->caching = false;
+		$smarty->cache_lifetime = 3600;
+
+	6. 新建程序页面  /index.php   并引入smarty的初始化文件
+
+	   新建模版页面  /template/index.html
+
+	7. 使用smarty对象调用模版方法  
+
+		$smarty->display(模版文件名); //在php页面调用模版文件
+
+		$smarty->display("模板文件名.后缀");
+
+		模板后缀:   index.html   index.tpl  index.dwt 
+		
+
+	注意：！！！！模版文件不能在浏览器内直接访问！！！
+
+
+smarty具体的使用：
+	1. PHP页面分配给模版中的数据,也PHP页面中数据怎么在模版中显示
+
+		$smarty->assign("tmp_var",$php_var);
+
+		tmp_var: 在模版中变量名
+		php_var: 具体的数据
+		
+		php程序页面往模版中传递数据
+
+
+		在模版中具体显示数据
+			{$tmp_var}----->{ }是模版标签的边界符
+
+smarty编译过程：
+	display()----->读取模版代码----->正则匹配出{ }中所有的东西--->解析--->编译成php代码--->php解析
+
+	index.php---->php---><?php   ?>-->结果
+
+	2. 修改模版标签的左右边界界符  默认： {  }
+	     $smarty->left_delimiter  = "{@";
+	     $smarty->right_delimiter ="@}";
+
+	3. smarty模版的标签不解析,原样输出
+		{literal}
+			smarty标签不会被解析
+			{$ada}
+		{/literal}
+
+	4. smarty模板内定义的局部变量[临时变量]
+		{assign var="变量名" value="值"}    //模版标签
+		
+		var: 变量的名字     //标签的属性
+		value:变量的值
+
+	5、smarty前台样式配置变量
+        6、smarty中session，get等变量使用
+
+
+smarty模版中控制结构
+	模版标签    默认边界符：   {  }
+		  单标签  {XXXX}	
+		  双标签  {XXXX} {/XXXX}
+
+	php中的控制结构
+		if---------->3种
+		switch(){}
+		for(){}
+		while(){}
+		do{}while()
+		foreach(){}
+	模版控制结构：
+		在模版中写一些控制结构，都会被smarty编译替换成对应的php控制结构
+
+	1. if结构
+		{if 条件}
+			布局代码
+		{elseif 条件}
+		
+		{else}
+
+		{/if}------>3种	
+	注意：
+	     比较运算符替换
+		 >    gt
+		 <    lt
+		 ==   eq
+		 !=   neq
+		 >=   gte
+		 <=   lte
+
+
+	注意： 替换的单词左右必须有空格
+	
+
+	2. foreach
+		模版中数组的遍历
+			
+		foreach 结构
+
+		{foreach from=$XXXX  name=""  item="vo"  key="k"}
+			
+			{$k}------>{$vo}  
+
+		{/foreach}
+
+		from : 被遍历的数组名字-->$变量
+		name : 此foreach的name
+		item : 被遍历出的数组元素的值的变量名
+		key  : 被遍历出的数组元素的key
+
+			
+	二维数组？
+		
+		理论上是几维数组几维循环！二维数组一次循环就行！
+
+		二维数组怎么遍历
+			可以使用关联数组访问的方式访问数据
+
+			$XXX["XXX"] || $XXX.XXXX
+
+	一般从数据库读出数据都是数组
+
+	一维的关联数组: 字段名=>值
+
+	二维的数组 : 外数组索引 内数组是关联:字段名=>值
+
+	
+	section:可以对数组里的记录进行二次记录筛选
+		$arr = array(1,2,3,4,5,6,7,8,9,0);
+		section 结构
+
+		{section name="name" loop=$XXX start="" step="" max="" show=""}
+			{$arr[name]}
+		{/section}
+
+		*name:循环体的名字，可以当做下标使用，但是 不是下标
+		*loop:被遍历的数组
+
+
+		start:被遍历的数组的起始记录  索引从0开始
+			正值:从头到尾的去找起始记录
+			负值:从尾到头的去找起始记录
+		step:步长
+			正值:从头到尾的取得记录
+			负值:从尾到头的取得记录
+		eg：
+		start=-1   step=-1    将记录进行倒序排列
+
+		max:循环次数，控制被遍历的数组记录条数
+		show:被遍历出得数据是否显示
+			true:显示数据   默认值
+			false:不显示数据
+
+	注意：
+	section循环不能遍历关联数组，（被循环的）数组必须是数字索引，像这样（0，1，2，...）。对于关联数组，请用{foreach}循环。
+
+
+smarty模版引入页面：
+	1.静态模版页面的引入
+		{include file="路径+文件"}
+		
+		路径计算是以当前的模板文件计算的
+		
+		head.html	
+		footer.html
+		
+	2.动态的PHP页面的引入   XXX.php
+		{include_php file="路径+文件"}
+
+		路径的计算是以当前的PHP页面来计算的
+	
+
+	3. Css Image Js 文件放在哪里？
+		/Public/Css|Image|Js
+
+	模版中使用路径： ./Public/Css|Js|Images/XXXXXX.XXX
+	
+	使用对应的html标签引入image|js|css   注意路径问题!
+
+新建smarty开发初级项目 index.php
+	拆分 head  和 footer
+	css images js
+
+前台样式
+	作用：
+		配置前台一些数据 title,keys,网站的描述,一些css样式
+
+	放在：
+		/configs/   目录
+
+	文件命名：  XXXXX.conf
+
+		[模块名]
+		配置项名=值
+		配置项名=值
+			eg:
+				[index]
+				title = 欣才商城
+				keys  = 欣才电脑  南京欣才电脑
+				description = 南京欣才
+				background = red
+				[index2]
+				title = 欣才商城2
+				keys  = 欣才电脑2  南京欣才电脑2
+				description = 南京欣才2
+				background = red2
+	
+	使用：
+		在模版文件的头部引入配置文件
+		{config_load file="XXXX.conf" section="模块"}
+
+	配置变量的输出
+		1.{#配置项名#}
+		2.{$smarty.config.配置项名}
+
+smarty插件
+	1. smarty系统的插件
+	2. 自定义插件
+
+smarty的系统的标签  系统的插件  
+	插件目录  /smarty/plugins/
+
+	插件:  就是smarty中能够完成一定功能的函数
+
+	单选框 <input type="radio" name="" value="">显示
+
+
+	       {html_radios name="" output="" values="" checked="" separator=""}
+
+	       name:   单选按钮组的名字
+	       output：显示的数据组成的一维索引数组
+	       values: 每个单选按钮value值组成的一维的索引数组
+
+	       checked: 被选中按钮的value值
+	       separator:按钮组的样式
+		
+	       options:  values作为数组的key  显示的数据作为values的一维的关联数组
+
+	复选框
+		{html_checkboxes name="" output="" values="" checked="" separator=""}
+		name:单选按钮的名字
+	        output：显示的数据内容组成的一维索引数组
+	        values: 每个单选按钮value值组成的一维的索引数组
+	        separator:按钮组的样式
+		checked:可以是单个数值也可以是被选中的按钮value组成的一维索引数组
+
+		options: values 做key  output 做value  的一维关联数组
+
+	下拉列表框
+		<select name="">
+			<option value="">显示的内容</option>
+		</select>
+
+		{html_options name="" output="" values="" selected=""}
+
+	时间插件
+		{html_select_time}   H:i:s
+
+	日期插件
+		{html_select_date start_year="" end_year=""}
+
+		start_year:起始的年份
+		end_year:终止的年份
+
+		month_format="%m" 
+		display_months=false
+		display_days=false
+		
+修饰函数：smarty插件函数  不是PHP的函数
+
+	就是对模版中的数据进行二次修饰
+
+	语法：
+		{$变量|函数名:参数1:参数2|函数名2:参数1....}
+
+	capitalize:首字母大写
+	date_format:设置日期格式     date("Y-m-d");	
+	truncate:截取字符串
+		参数1：  截取的字符串长度
+		参2：    被截取出的字符串后连接的字符  默认...  ...是计算到长度
+		参3：    true|false默认的  是否分割单词 
+
+	count_characters:统计字符个数
+	default:设置默认值
+	indent:缩进
+	lower:将字符转换为小写
+	strip_tags:去掉HTML标签 
+	upper:将字符转换为大写
+	replace:字符串替换
+
+注意：模版中也是可以是php函数  语法和修饰函数一致
+
+
+smarty插件：
+	就是smarty中能够完成一定功能的函数
+
+smarty中session cookie const get post  超全局变量
+
+	在smarty模版中怎么去获取值
+
+	$smarty.session.变量名    
+	$smarty.cookies.变量名
+	$smarty.const.常量名
+	
+	$smarty.get.变量名
+	$smarty.post.变量名
+
+smarty自定义插件:
+	插件目录  /smarty/plugins/
+
+插件:  就是smarty能够完成一定功能的函数
+
+   1)修饰函数插件 : 对模版中的数据进行再修饰    upper        modifier
+   2)块状block插件:修饰插件内的数据   {XXXX}content{/XXXX}    block
+   3)function类型的插件: {html_select_time}                   function
+
+
+(1)修饰函数的插件:  模版中变量进行二次修饰
+
+	{$var_name|funName:can1:can2}
+	
+	1)文件名: modifier.插件名.php
+
+	2)function smarty_modifier_插件名(参数,参数1,参2....){
+		
+		return 被smarty_modifier_插件 修改后的数据;
+	}
+
+	------->必有返回值
+
+	1、第一个参数是 原参数---->要修饰的模版中的数据
+	2、第二个参数是 对应调用时实参中的第一个参数
+
+	结果是以函数return值的形式返回！
+	
+	使用：
+		{$username|函数:参1:参2}
+		
+	封装一个截取字符串的修饰函数插件
+		modifier.my_substr.php
+		
+		function smarty_modifier_my_substr($params,$start,$length){
+			return substr($params,$start,$length);
+		}
+		
+
+		{$username|my_substr:0:5}
+
+	写一个修饰函数插件，实现统计数组的长度
+
+		modifier.get_array_count.php
+		
+		function smarty_modifier_get_array_count($params){
+			$arr = get_all_array_values($params);
+			return count($arr);
+		}
+		
+		function get_all_array_values($arr){
+			static $list = array();
+			foreach($arr as $vo){
+				if(is_array($vo)){
+					get_all_array_values($vo);
+				}else{
+					$list[] = $vo;
+				}
+			}
+			return $list;
+		}
+
+		{$array|get_array_count}
+
+	统计购物车产品个数
+		modifier.get_car_num.php
+		
+		function smarty_modifier_get_car_num($params){
+			$sum = 0;
+			foreach($params as $vo){
+				$sum += $vo["num"];
+			}
+			return $sum;
+		}
+		
+		{$smarty.session.car|get_car_num}
+
+		
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

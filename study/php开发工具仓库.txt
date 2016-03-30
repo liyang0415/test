@@ -1,0 +1,8 @@
+http://192.168.10.240:3000/WispiritCommonLib/PhpDevTool
+包含
+phpunit 测试框架
+phpdoc 文档生成器
+php-cs-fixer 代码格式化
+等工具
+clone到本地之后，在系统变量path中，加入[本地路径]/PhpDevTool/vendor/bin
+即可在命令行使用bin中的命令

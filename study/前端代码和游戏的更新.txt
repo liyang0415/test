@@ -1,0 +1,13 @@
+svn账号：sunjianzhong  sjzsvn
+git账号：sunjianzhong   sunjianzhong  
+production>
+前端更新：
+    1、将prod.php放置在production中
+    2、  shift+ 右键 ， 点击在此处打开命令窗口
+    3、输入php prod.php jingboss-backend frontend jingboss-frontend develop  
+
+游戏更新：
+1、先更新svn，然后将“上海精总范式（office打开）”打开，共四个页签，点击选项，启用宏，分别另存为cvs格式，
+保存于F:\Production\jingboss-backend\Wispirit\Data\json，分别名为cogn.cvs,game.cvs,para.cvs,tpl.cvs
+2、F:\Production\jingboss-backend\Wispirit\Web>php api.php InitModule/genAllGameData
+3、F:\Production>php prod.php jingboss-backend updateGame games
