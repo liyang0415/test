@@ -1,0 +1,21 @@
+NameVirtualHost *:80 
+<VirtualHost *:80>
+  DocumentRoot "E:/thinksite"
+  ServerName  www.li.com
+  <Directory "E:/thinksite">
+Options Indexes FollowSymLinks
+AllowOverride None
+Order allow,deny
+Allow from all
+</Directory>
+</VirtualHost>
+<VirtualHost *:80>
+DocumentRoot "E:/wamp/wamp/www"
+ServerName localhost
+<Directory "E:/wamp/wamp/www">
+Options Indexes FollowSymLinks
+AllowOverride None
+Order allow,deny
+Allow from all
+</Directory>
+</VirtualHost>
