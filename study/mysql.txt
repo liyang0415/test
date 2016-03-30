@@ -1,0 +1,1763 @@
+复习初级的mysql
+
+	web网站--->数据--->数据库--->数据库--->数据库--->表--->字段
+
+	表怎么创建?
+		网站模块
+			项目需求分析
+
+	数据库设计三大范式
+
+
+	创建表
+		create  table [if not exists] tableName(
+			字段名	类型(长度) 属性,
+			字段名	类型(长度) 属性,
+			字段名	类型(长度) 属性,
+			字段名	类型(长度) 属性,
+			.....
+		)engine=XXX default charset=XXXX
+
+	1 字段名
+		有意义
+	2 类型
+		整型 int(10)
+		浮点型
+			floor(10,2)
+			decimal(10,2)
+		字符型
+			char
+			varchar
+			text
+		日期型
+			date
+			time
+			datetime
+	3 属性
+		auto_increment
+		primary key
+		not null || null
+		default
+		zerofill
+		key 索引
+
+	数据CRUD操作
+
+	create
+
+		insert into 表 (字段列表) values(),(),()....
+		insert into 表 set 字段1=值1,字段2=值2....
+
+	delete
+
+		from 表 条件(where Xid=XX)
+
+	update
+		update 表 set 字段=值,字段=值.... 条件(where Xid=XXX)
+
+	read
+		select
+			* || 字段列表
+		form
+			表 别名,表 别名
+		where
+			....
+		having
+		order by
+		group by
+		limit start,len
+		like %XX%
+
+	简单的多表查询
+		select
+			*
+		from
+			A a,B b
+		where
+			a.Xid = b.Xid
+
+	关系型数据库 mysql orcle sqlserver
+
+
+
+	非关系型数据库(nosql)
+		key=>value
+
+
+
+	软件架构
+		C/S		client		server
+		B/S		browser		server
+
+	B/S 流程
+		浏览器		http		服务器
+
+		 请求				 响应
+
+
+	浏览器(地址栏-->域名)<--------->DNS(域名Ip地址)
+	   |
+	   | Ip + 80
+	   |
+	 服务器--->apache--->分析URL--->.php--->php.exe--->解析<?php  ?>--->apache--- http --->浏览器(div css js)--->网页
+
+
+建立数据库：
+	tk101
+
+stu_info：
+	id  sname   age     addr
+	1    Tom     20     beijing
+	2    Lucy    23     nanjing
+	3    Lily    18     beijing
+	4    Damat   21     shanghai
+	5    jim     29     nanjing
+marks_info：
+	id   s_id    c_id   marks
+	1    1        1     65
+	2    1        2     60
+	3    3        2     70
+	4    4        2     90
+	5    5        1     100
+class_info：
+	id     c_name
+	1      chinese
+	2      english
+
+
+查询学生的所有的信息
+
+	select
+		*
+	from
+		stu_info s,marks_info m,class_info c
+
+	where
+		s.id=m.s_id and c.id=m.c_id
+
+不同学科平均成绩？
+	select
+		c.id,c.c_name,avg(m.marks)
+	from
+		marks_info m,class_info c
+	where
+		m.c_id=c.id
+
+	group by
+		m.c_id
+
+中级mysql
+
+1. 多表查询
+	1.1 内连接
+		sql中的多表连接中一种;将其中两个表的匹配结果再和第三个表进行匹配，可以节省匹配次数和提高检索速度
+
+		基本语法
+			表1 inner join 表2 on 条件 inner join 表3 on条件 ....
+
+			A a inner join B b on a.XXX=b.XXX inner join C c  on c.XX=b.XX
+
+		查询出学生的所有的信息?
+
+		select
+			s.id,s.sname,s.age,s.addr,c.cname,m.marks
+		from
+			stu_info s inner join marks_info m on s.id=m.s_id inner join class_info c on c.id=m.c_id
+
+
+		查询成绩大于70的学生名字和科目以及分数?
+
+		select
+			*
+		from
+			stu_info s inner join marks_info m on s.id=m.s_id  inner join class_info c on c.id=m.c_id
+		where
+			m.marks >70
+
+	1.2 外连接
+		在某些情况下，需要以A表为参照物 B表与之匹配，如果A表的记录在B比表中有匹配结果，那么就显示，如果没有匹配记录，那么在查询结果中B表中字段所对应的值用null填充
+			A			B
+
+		id	sid	name		id  schoolName
+		 1       1      tom		 1     南大
+		 2       1      lili		 2     清华
+		 3       2      jim
+		 4       2      lucy
+		 5       3      liu
+
+	1       1      tom		 1     南大
+
+	2       1      lili		 1     南大
+
+	3       2      jim		 2     清华
+
+	4       2      lucy		 2     清华
+
+	5       3      liu               nul   null
+
+
+		2.1  左连接
+		        以左边表为参照物 到右边表进行匹配
+
+			A as a  left join B as b on 条件
+
+			select
+				*
+			from
+				stu_info s right join marks_info m on s.id=m.s_id
+
+			意思：表左连接时，以左边表为参照物,到右边表匹配，
+			如果左边的表在右边的表中有匹配的记录，那么就显示记录，
+			否则在右边表的相应的字段中填充null
+				查询出记录至少：  左
+
+
+		2.2  右连接   right join
+			  以右边表为参照物 到左边表匹配
+			A as a  right join B as b on 条件
+
+		2.3  全链接   full join
+			 全连接：mysql不支持全连接
+
+
+	3. 交叉连接 笛卡尔积
+		就是拿一个表中的记录和另一个表中的记录进行全匹配。
+			A as a cross join B as b
+
+			eg:
+				每个学生可能考的科目
+				select
+					*
+				from
+					stu_info s cross join class_info c
+				where
+					s.id=1
+		结果中记录：
+			A 记录数  *  B 记录数
+	4. 自查询
+		数据都是存在一张表里,只是在查询的时候 表的别名不一样
+
+
+		公司结构
+			员工和领导  张三既是员工又领导
+
+		worker
+
+		id   name   lid
+		1     tom    2
+		2     lili   3
+		3     jim    6
+		4     lucy   6
+		5     zuoqiang 7
+		6     liu      7
+		7     boos    0
+
+		写个sql语句，查询出所有的员工的领导
+		select
+			w.id,w.name as worker,l.name as leader
+		from
+			worker w inner join worker l on w.lid=l.id
+
+	5.多表查询
+
+		查询是对表中的数据进行全表扫描  全表匹配
+
+		select
+			*|all|distinct |字段 as 别名,...|字段列表
+		from
+			表1 别名，表2 as 别名……
+			inner join   on  条件
+			left join    on  条件
+			right join   on  条件
+			cross join   on  条件
+
+		where 表1.字段1=表2.字段2 and 表2.字段……
+		and|or|in()|<>[!=][不等于]|between and |like|=|not in|not between|not
+		having
+		group by
+		order by  字段 DECSC|AS
+		limit start,length
+		like "%abc%"
+
+
+
+	除了count(字段)函数外所有的聚合函数使用都必须在数值型字段上
+
+	注意：聚合函数 avg(字段) max(字段) min(字段) sum(字段)
+
+	一般都是和分组一起使用时，牢记先分组后计算的原则，计算的数据是分组后的针对每个小分组的计算，而不是整个表数据计算
+
+
+	检索每个学生的姓名，地址，年龄，科目、科目成绩
+
+		select
+			s.id,s.sname,s.addr,s.age,c.c_name,m.marks
+		from
+			stu_info s inner join marks_info m on s.id=m.s_id inner join class_info c on c.id=m.c_id
+
+
+	注意：如果检索的表中都存在同一个名称字段，那么使用这个字段时，必须使用 表名[表的别名].字段名 来去识别字段来源于哪个表
+
+		字段别名：方便用户查看信息  select name as "姓名";
+		表的别名：方便用户调用表中的字段
+
+	如果一次性不能多表查询出所需要的结果，可以使用*临时表*建立一个中间表然后进行多表查询 临时表必须用 别名
+
+		查询：科目id 科目名称 平均成绩，最高成绩，最低成绩
+
+		select
+			c.id,c.c_name,avg(m.marks),max(m.marks),min(m.marks)
+		from
+			marks_info m inner join class_info c on c.id=m.c_id
+		group by m.c_id
+
+	查询出每个学生名字，所考课目名，科目的成绩 科目平均成绩，最高成绩，最低成绩
+
+		select
+			s.id,s.sname,ll.c_name,m.marks,ll.avgm,ll.maxm,ll.minm
+		from
+			stu_info s inner join marks_info m on s.id=m.s_id inner join (select
+			c.id,c.c_name,avg(m.marks) avgm,max(m.marks) maxm,min(m.marks) minm
+		from
+			marks_info m inner join class_info c on c.id=m.c_id
+		group by m.c_id) ll on m.c_id=ll.id
+
+		where s.id=5
+
+
+嵌套查询
+
+	主查询的条件,由子查询提供
+
+	嵌套查询比较快，例如你有三张表，每张表有1000条记录，如果利用三张表进行连接查询，那么计算机要运算1000*1000*1000次，而用嵌套查询，则只需要1000+1000+1000次，所以嵌套查询要快得多了，当然，记录太少的话都一样的，因为计算机的计算速率是成千上万次的
+
+	检索出学生科目分数大于60的学生基本信息
+	select
+		s.id,s.sname,s.age,s.addr
+	from
+		stu_info s inner join marks_info m on s.id=m.s_id
+	where
+		m.marks>60;
+
+			1000 * 1000
+	||
+
+	select
+		*
+	from
+		stu_info
+	where
+		id in (select s_id from marks_info where marks>60);
+
+
+		1000 + 1000
+
+	stu_info 1000   marks_info 1000
+
+
+	查询中记录条数比较多，而查询出的有效记录比较少时，这个时候使用嵌套查询，可以节省匹配次数
+
+	查询出级别在 5 以上所有员工的领导！
+			100000
+		worker
+			id   name lid  jibie
+
+		级别在5以上8个人
+
+	select
+		w.id,w.name,l.name
+	from
+		worker w inner join worker l on w.lid=l.id
+	where
+		w.jibie > 5
+
+	10W*10W + 10W
+
+	||
+
+	select
+		w.id,w.name,l.name
+	from
+		worker w inner join worker l on w.lid=l.id
+	where
+		w.id in(select id from worker where jibie>5);
+
+	10W*10W + 10W + ????
+
+	嵌套查询为什么快?
+
+	注意：
+	子查询中的select语句查询的结果和条件字段来源于同样的数据源
+
+
+	关键字：
+	in  ：查询出的记录是  散列的数据
+		select * from stu_info where id in(select s_id from marks_info where marks>60)  1,55,89
+		==
+		select * from stu_info where id =1 || id =55 || id=89
+
+	any:
+		select * from stu_info where id > any(select s_id from marks_info where marks>60)  (6,8,16)
+		==
+		select * from stu_info where id > (select min(s_id) from marks_info where marks>60)  (6)
+
+			大于最小的         小于最大的
+
+	all:
+		select * from stu_info where id >  all(select s_id from marks_info where marks>60) (6,8,16)
+		==
+		select * stu_info where id > all(select max(s_id) from marks_info where marks>60)
+
+			大于最大的               小于最小
+	exists:子查询中记录是否存在，如果有记录返回，主查询中就执行，否则主查询就不执行
+
+		select * from stu_info where not exists(select * from marks_info where s_id=1)
+
+
+	exists用于检查子查询是否至少会返回一行数据，该子查询实际上并不返回任何数据，而是返回值True或False
+
+	not exists :  与 exists 相反
+		select * from stu_info where not exists(select * from marks_info where s_id =1);
+
+
+	select * from stu_info【内表】 where id=1 and exists(select s_id from marks_info【外表】 where s_id=1);
+
+		in 是把 *外表* 和 *内表* 作 hash 连接
+
+		exists是对 外表 作loop循环，每次loop循环再对 内表 进行查询
+
+
+
+	认为exists比in效率高的说法是不准确的。
+	如果查询的两个表大小【记录】相当，那么用in和exists差别不大
+
+	如果两个表中一个较小，一个是大表，则子查询表大的用exists，子查询表小的用in
+
+	总结
+		多表查询,根据数据库设计,选择合理的查询方式组成sql
+
+
+索引	index
+
+	1.索引介绍
+
+	是给无序的记录建立目录，给记录创建记录[目录]
+
+	索引是建立在字段上----------------->索引文件
+
+	table-----表文件
+
+	查询是对表中的数据进行全表扫描  全表匹配
+		操作文件
+
+	一个表对应三个文件
+		stu_info.frm     表的结构   desc 表
+		stu_info.MYD     数据文件   100
+		stu_info.MYI     索引文件
+
+	表  50字段
+
+	70W-----664MB大小
+
+
+		id--->索引
+
+	select * from user where id=100;
+		查找索引文件 id = 100
+		没有 ---->结束
+		查到了---->读取的是id=100这条记录在数据文件中的地址，直接定位数据出来
+
+
+	索引调用：
+	   索引不需要人工调用，只要sql语句在条件部分使用了被索引的字段，mysql会自动调用，自动查找，自动运行
+
+	好处：
+	   1）避免了检索数据时磁盘的 全表扫描，可以节省扫描时间，可以节省记录排队进入内存的和CPU的时间
+
+	   2）max和min更加有效
+		age    select min(age) from user;
+
+	   3）对于多表连接和嵌套查询更加有利;
+		select * from stu_info where id in(select s_id from marks_info where marks>60)
+
+	缺点:
+	   1)占有的磁盘空间大;---->索引文件
+	   2)如果建立的索引过多，那么扫描 索引文件 浪费时间过多;
+
+
+	什么字段要建立索引？
+
+	   经常作为条件的字段或者是经常在
+	   where  条件  后面的字段，这些字段建立索引
+
+	   where id = 1 and  name   age   addr
+
+
+	2.索引的使用
+		2.1创建索引：
+			1）表存在时，直接建立索引
+			   create index 索引名 on 表名(字段);
+
+			    eg:
+				 create index sname on stu_info(sname);
+
+			2）修改表结构时建立索引:
+
+			alter table 表名 add index 索引名(字段名);
+
+			alter table stu_info add index sname(sname);
+
+			3）创建表时，创建索引:
+			   create table teacher(
+				   id int(2) not null,
+				   name varchar(30) not null,
+				   key name(name)
+			   );
+
+		2.2 查看索引：
+			 show index from 表名;//查看表的索引
+		   查看表结构：
+		     desc stu_info;  MUL普通  pri主键   uni唯一
+
+	3. 索引的分类
+		3.1 根据记录的特点
+			普通索引    MUL普通
+				表中的任何字段都可以建立普通索引（值：记录可以为null，记录可以重复）
+				create index 索引名 on 表名(字段名)
+			唯一索引：  uni唯一
+				记录可以为空[null]，记录不能重复
+				create unique index 索引名 on 表名(字段名)
+
+			主键索引:  pri主键
+				记录不能为空，记录不能重复
+			create table 表名(
+					id int(5) primary key;
+					。。。
+			)
+
+		3.2 根据索引的个数
+			1.单列索引   以上讲的都是单列
+			2.多列索引
+			就是索引内容为多个字段
+
+			建立一个多列索引就相当于建立多个单列索引
+
+			建立两个字段的多列索引就相当于建立了三个索引
+
+			多列普通索引
+			create index 索引名 on 表（字段1,字段2）
+
+			create index ok on 表(age,addr,XXX)
+
+			where age =XX and addr=XXX
+
+			多列唯一索引
+			create unique index 索引名 on 表（字段1,字段2）
+
+			多列主键索引
+			   复合主键
+				3)create table news(
+					id int(2) auto_increment primary key,
+					name varchar(20) primary key,
+				);  错误
+				4)create table 表名(
+					字段列表,
+					...
+					primary key(字段1，字段2……)
+
+				);
+			show index from 表：
+			Seq_in_index:是多列索引的下标;
+			Key_name:字段索引的名字;
+
+
+	4.根据内容索引    解释：根据字段的value长度进行建立索引
+
+	 [1]短索引:
+		建立短索引的字段特点:
+			字符型varchar|char或者文本型text的字段
+			title  varchar(120)
+
+			河南信阳男子小学门口砍杀24人获死刑
+			日韩改变态度允许民航向中国通报飞行计划
+			驻欧盟使团发言人："法轮功"是反华政治组织
+			台湾强制大陆资本21日内撤出有线电视领域
+			彭丽媛撰文怀念恩师感谢提携之情 称其为伯乐
+
+
+		create index 索引名 on 表(字段(60))
+
+		eg:
+			create index title on news(title(60))
+
+	        单列普通短索引
+			create  index 名  on 表(字段1(长度))
+		单列唯一短索引
+			create unique index 名  on 表(字段1(长度))
+		单列主键短索引
+			create table aa(
+			id int(11) ,
+			...
+			primary key(id(3))
+
+		多列普通短索引
+			create  index 名  on 表(字段1(长度),字段2(长度))
+		多列唯一短索引
+			create unique index 名  on 表(字段1(长度),字段2(长度))
+		多列主键短索引
+			 create table news_info (
+			 id int (2),
+			 title varchar(100),
+			 author varchar(50),
+			 content varchar(500),
+			 primary key(title(20),author(10)));
+
+		sub_part：代表的是短索引 [长度]
+
+
+
+	select * from stu_info addr=shanghai
+
+
+	5. 删除索引：
+		drop index 索引名 on 表名
+
+点建立索引注意要：
+1)检索速度:主键-->唯一-->普通--->没有索引  降低
+
+1、表的主键、外键****必须有索引
+2、数据量超过300条记录的表应该有索引
+3、经常与其他表进行连接的表，在连接字段上应该建立索引
+4、经常出现在Where子句中的字段，特别是大表的字段，应该建立索引
+6、索引应该建在小字段上，对于大的文本字段甚至超长字段，不要建索引
+	建立 短索引
+		create index index5 on stu_info(contents(200))
+
+	总结
+		普通单列索引
+		索引名称 要与 字段名 一致
+
+
+4. 视图
+
+	数据源于表而高于表的虚拟表
+
+	查询学生的所有的信息?
+		select
+			s.id,s.sname,s.age,s.addr,c.c_name,m.marks
+		from
+			stu_info s inner join marks_info m on s.id=m.s_id inner join class_info c on m.c_id=c.id
+
+	目的：
+	视图主要用于多表查询时，将查询结果的影响数据临时的保存到某个虚拟表中，以后再用到该类型的数据时直接查询虚拟表
+
+
+	1.视图只能做检索功能，不能 增 删 操作，检索的方式于其他表没有区别
+	2.视图名不能和表重名，视图是依附于数据库存在的
+	3.视图主要是多表查询的结果，存储的数据源于多个表，单表的视图是无任何意义的
+
+	视图存在
+		依附于数据库存在
+
+	视图的创建
+		create view 视图名 as 多表查询的sql语句
+	eg:
+		create view all_info_for_student as select
+			s.id,s.sname,s.age,s.addr,c.c_name,m.marks
+		from
+			stu_info s inner join marks_info m on s.id=m.s_id inner join class_info c on c.id=m.c_id;
+
+
+	修改视图
+		alter view 视图名 as 新的sql语句
+
+	视图的调用
+		与表的查询一致 select  *  from 视图名
+
+	删除视图
+		drop view 视图名
+
+Mysql的逻辑
+	1.  存储过程
+	2.  触发器
+
+	mysql中的语句
+		变量的定义
+		set @变量名=值;
+
+
+	   1]赋值语句:
+	     set @变量名=值;
+		set @a = 100;
+	   2]输出语句:
+	     select 输出的内容|@变量名
+           3]
+		;  在mysql中 命令结束符[执行符]
+
+		delimiter  重新定义mysql执行符命令
+			delimiter //
+	执行符：
+
+	其实就是告
+	诉mysql解释器，该段命令是否已经结束了，mysql是否可以执行了,CMD每次打开都重新定义。
+
+
+mysql的函数
+	【mysql中的字符串和时间】
+	concat(字符1,字符2...) 字符连接
+	instr(字符串,字符) 寻找字符所在字符串的位置
+
+	char()     ascii编码 转化为字符
+	ord()      字符转化为ascii编码
+	a - z    A - Z
+	97-122   65-90
+
+	substring(字符串,开始位置,长度);
+	length(字符串) 字符串长度
+	substr(字符串,开始位置,长度);
+	lpad() 往左边填充(str,len,padstr)
+		lpad(str,len,padstr)
+	rpad() 往右边填充
+
+	lower() 转化为小写
+	upper() 转化为大写
+	select left(字符串,长度);从左边取几位
+	select right(字符串, 长度);从右边取几位
+	select curdate(); 获取当前的日期
+	select curtime();  获取当前的时间
+	select now();获取当前的时间跟日期
+
+5. 存储过程
+	mysql的语句集  mysql自定义的函数------>控制结构
+
+	相当于php的函数
+
+	网站----->操作----->php(数据库处理、组成sql)------>mysql
+
+mysql存储过程：mysql中的一种需要 手动调用的 自定义函数 ----->实现对数据库中表的操作
+
+
+好处：
+   有了存储过程可以 简化具有逻辑的php程序  成为mysql功能函数，提高数据操作速度
+
+网站----->操作----->php(调用mysql存储过程)----->mysql(存储过程)
+
+	1]use 数据库名
+
+	2]定义命令执行符 cmd每打开一次执行符号要重新定义
+		delimiter //
+
+	3]定义存储过程:
+		create procedure 名称(in|out|inout 参数1 类型,in|out|inout 参数2 类型...)
+		begin
+			//代码块
+		end
+			eg:
+				create procedure c1()
+				begin
+					select 1;
+				end
+
+
+	4]存储过程调用
+		call 名称(实参1,实参2)
+
+	5]删除存储过程
+		drop procedure 名称;
+
+
+	存储过程的参数(形参)问题
+
+		create procedure XXX(in|out|inout 参数 类型(长度),....)
+		begin
+			//代码
+		end
+
+	类型in|out|inout： 是对参数的修饰
+		1. in    设置参数为传入参数
+		2. out   设置参数为传出参数  相当于PHP的return
+		3. inout 设置参数为传入、传出参数
+
+	类型(长度)：是对参数数据类型的修饰
+		1. int 整型
+		2. varchar 字符型
+
+
+	实现N+1的存储过程
+
+
+		create procedure c2(in num int(10),out sum int(11))
+		begin
+			set num = num+1;
+			set sum = num;
+		end
+
+
+
+		call c2(100,@res);
+
+
+	实现两个数的求和！
+
+		create procedure c3(in a int(5),in b int(5),out sum int(6))
+		begin
+			set sum = a+b;
+		end
+
+		call c3(100,2,@res);
+
+
+
+
+实现两个数的求积！
+
+	create procedure c4(in a int(5),in b int(5),out sum int(6))
+		begin
+			set sum = a*b;
+
+		end
+
+		call c4(2,2,$gggg);
+	实现两个变量值的交换！
+		set @a = 100;
+		set @b = 2;
+
+		create procedure c6(inout num1 int(5),inout num2 int(5))
+		begin
+			set num1 = num1+num2;
+			set num2 = num1-num2;
+			set num1 = num1-num2;
+
+		end
+
+		call c4(@a,@b);
+
+		select @a;  2
+		select @b;  100
+
+
+	存储过程中的临时变量：
+
+	declare 变量名 类型(长度) default 默认值;
+
+	------>存储过程中的临时变量  ------->php中函数中的局部变量
+		declare name varchar(20) default "";
+		------------------------------->$name = "";
+		declare tag int(5) default 0;
+		------------------------------->$tag = 0;
+
+	使用第三方变量,实现两个变量值的交换？
+
+	create procedure c5(inout can1 int(5),inout can2 int(5))
+	begin
+		declare c int(5) default 0;
+		set c = can1;
+		set can1 = can2;
+		set can2 = c;
+	end
+
+	call c5(@a,@b);
+
+
+存储过程中的控制结构
+	php中的控制
+		if结构----->3种
+		switch(){}
+		for(){}
+		while(){}
+		do{}while()
+		foreach(){}
+
+	1. if结构
+
+		if 条件 then
+			代码
+		elseif 条件 then
+			代码
+		else
+			代码
+		end if;   ----------->3种
+
+
+	写个存储过程 判断 in 值是 >0 ||  <0  || ==0
+
+	create procedure c6(in num int(5))
+	begin
+		if num > 0 then
+			select ">0";
+		elseif num = 0 then
+			select "=0";
+		else
+			select "<0";
+		end if;
+	end
+
+	call c6(10);
+
+	mysql中 into关键字
+
+		select id into 变量 from 表 where 条件
+
+		变量 : 存储过程中局部变量 存储过程中的临时变量
+
+		declare tag int(5) default 0;
+
+		select id into tag from  表 where 条件
+
+		查的字段类型大小 与 临时变量的类型大小要一致！
+
+		declare tag int(5) default 0;
+
+		select id into tag from stu_info where sname='tom';
+
+		注意：sql语句只能查询一条记录
+
+
+	判断某个用户名是否存在与stu_info表中?
+		在： Yes
+		不在: XXX 不存在
+
+
+
+
+
+
+
+
+	create procedure user_existss(in uname varchar(200))
+	begin
+		declare tag int(5) default 0;
+		select id into tag from stu_info where sname=uname;
+
+		if tag then
+			select "Yes";
+		else
+			select concat(uname," no exists!");
+		end if;
+	end
+
+	call user_existss("tom");
+
+
+	//插入学生信息如果name不存在 insert  如果存在 输出:XXX已经存在
+	create procedure user_exists2(in uname varchar(200))
+	begin
+		declare tag int(5) default 0;
+		declare inid int(5) default 0;
+		select id into tag from stu_info where sname=uname;
+
+		if !tag then
+			insert into stu_info values(null,uname,22,'nanjing');
+			select id into inid from stu_info where sname=uname;
+			if inid then
+				select "ok";
+			else
+				select "no";
+			end if;
+		else
+			select concat(uname," exists!");
+		end if;
+	end
+
+	call user_exists2("tom");
+
+
+
+
+
+
+
+create procedure user_add2(in uname varchar(100),in uage tinyint (3),in address varchar(100),out res int(5))
+begin
+   declare tag int(5) default 0;
+   declare inid int(5) default 0;
+   select id into tag from stu_info where sname=uname;
+   if !tag then
+     insert into stu_info value(null,uname,uage,address);
+     select id into inid from stu_info where sname=uname;
+     if inid then
+        set res=0;
+        end if;
+   else
+   set res=1;
+   end if;
+end
+
+
+
+
+	分支
+		case true
+			when 条件  then
+				代码1;
+			when 条件  then
+				代码2
+			.....
+			else
+				代码
+
+		end case;
+
+	//查看 某个学生的某门成绩    A B C D
+
+
+create procedure show_grade(in uid int(5),in cid int(5),out res varchar(100))
+begin
+     declare m int(100) default 0;
+     declare ff varchar(100) default "";
+     select marks into m from stu_info s inner join marks_info m on s.id=m.s_id inner join class_info c on m.c_id=c.id where s.id=uid and c.id=cid;
+     if m then
+          case true
+	         when m>=90 && m<=100 then
+					set ff = "A";
+				when m>=80 && m<90 then
+					set ff = "B";
+				when m>=70 && m<80 then
+					set ff = "C";
+				when m>=60 && m<70 then
+					set ff = "D";
+				else
+					set ff = "E";
+		end case;
+	else
+	        set ff="no kao!";
+        end if;
+	set res=ff;
+	end
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+	create procedure get_grade(in sid int(5),in cid tinyint(2),out res varchar(200))
+	begin
+		declare m int(3) default 0;
+		declare jg varchar(200) default "";
+		select marks into m from stu_info s inner join marks_info m on s.id=m.s_id inner join class_info c on c.id=m.c_id where s.id=sid and c.id=cid;
+
+		if m then
+			case true
+				when m>=90 && m<=100 then
+					set jg = "A";
+				when m>=80 && m<90 then
+					set jg = "B";
+				when m>=70 && m<80 then
+					set jg = "C";
+				when m>=60 && m<70 then
+					set jg = "D";
+				else
+					set jg = "E";
+			end case;
+		else
+			set jg = 'not kaoshi';
+ 		end if;
+		set res = jg;
+	end
+
+	get_grade(1,2,@res);
+
+
+
+	循环结构
+		while
+			while 条件 do
+				代码
+			end while;
+
+	求100以内所有的数的和!
+
+	create procedure getSum(in num int(5),out sum int(10))
+	begin
+		declare he int(10) default 0;
+		while num>0 do
+			set he = he + num;
+			set num = num -1 ;
+		end while;
+		set sum = he;
+	end
+
+	call  getSum(100,@res);
+
+	求100以内奇数且能被3整除的数的和？
+
+	create procedure getSum2(in num int(5),out sum int(11))
+	begin
+		declare he int(11) default 0;
+		while num>0 do
+			if num%2 != 0 && num%3=0 then
+				set he = he + num;
+			end if;
+			set num = num - 1;
+		end while;
+		set sum = he;
+	end
+
+
+	repeat循环： 条件不成立 循环   成立时结束
+		repeat
+			代码块
+			until 条件
+		end repeat;
+
+
+	求 N 以内所有数的和?
+	create procedure getSum3(in num int(5),out sum int(11))
+	begin
+		declare he int(11) default 0;
+		repeat
+			set he  = he + num;
+			set num = num - 1;
+			until num = 0
+		end repeat;
+		set sum = he;
+	end
+
+	call getSum3(100,@res);
+
+
+	loop:循环
+		名字:loop
+			代码块
+
+			if 条件 then
+				leave 名字
+			else
+				iterate 名字
+			end if;
+		end loop;
+
+	100所有数的和
+	create procedure getSum4(in num int(5),out sum int(11))
+	begin
+		declare he int(11) default 0;
+		one:loop
+			set he = he + num;
+			set num = num - 1;
+
+			if num=0 then
+				leave one;
+			else
+				iterate one;
+			end if;
+		end loop;
+		set sum = he;
+	end
+	call getSum4(100,@res);
+
+6. 游标
+	就是存储数据的集合、记录集,好比php的二维数组
+
+	如果想在存储过程当中操作mysql表中的数据怎么办？！
+
+在数据库中，游标是一个十分重要的概念。游标提供了一种对从表中检索出的数据进行操作的灵活手段，就本质而言，游标实际上是一种能从包括多条数据记录的结果集中每次提取一条记录的机制
+
+		在存储过程中 操作表中的数据
+
+游标总是与一条SQL选择语句相关联,因为游标由结果集（可以是零条、一条或由相关的选择语句检索出的多条记录）和结果集中指向特定记录的游标位置组成。【指针】
+
+
+当决定对结果集进行处理时，必须声明一个指向该结果集的游标
+	select * from stu_info------->游标
+
+数据库开发过程中
+
+当你检索的数据只是一条记录时，你所编写的语句代码往往使用 SELECT 语句。但是我们常常会遇到这样情况
+
+即从某一结果集中逐一地读取一条记录
+
+那么如何解决这种问题呢? 使用游标
+
+
+游标必须结合 存储过程使用
+
+	在存储过程里面 通过游标去操作数据库中的数据
+
+
+1]游标的定义:
+    declare 游标名 cursor for select语句
+	 eg:
+		declare allData cursor for select id,sname,age  from  stu_info
+			10条数据
+
+		allData---->游标
+
+			1  tom  22
+			2  lili 20
+
+2]使用
+     open 游标
+
+3]从游标中取得数据
+    fetch 游标 into 变量列表
+	fetch allData into a,  b,  c;
+			   1  tom  22
+
+	游标每次提取一条记录：内部是有类似于mysql_fetch_assoc()
+
+4]关闭游标:
+    close 游标名;
+
+
+设置游标的操作句柄:
+
+declare 没有触发句柄时的操作 handler for sqlstate '错误代码' set 触发句柄时执行的操作;
+
+没有触发句柄时的操作： exit|continue
+
+错误代码：
+
+02000   游标里的数据未发现
+01000   程序出错
+
+触发句柄时执行的操作 tag = 1
+
+ eg :
+	declare continue handler for sqlstate '02000' set tag = 1;
+
+	feach继续执行 直到 游标中数据没了之后把tag 的值设置为1
+
+
+写个存储过程，打印出所有学生的id和名字！
+
+create procedure show_info()
+begin
+	declare tag int(1) default 0;
+	declare a int(11) default 0;
+	declare b varchar(200) default "";
+	declare allData cursor for select id,sname from stu_info;
+	declare continue handler for sqlstate '02000' set tag = 1;
+	open allData;
+		while tag = 0 do
+			fetch allData into a,b;
+			if tag = 0 then
+				select a;
+				select b;
+			end if;
+		end while;
+	close allData;
+end
+
+call  show_info();
+
+
+写个存储过程把stu_info 里面所有的数据  转移到 A表中
+create procedure move_data()
+begin
+	declare tag int(1) default 0;
+	declare a int(11) default 0;
+	declare b varchar(200) default "";
+	declare c int(3) default 0;
+	declare d varchar(200) default "";
+	declare allData cursor for select id,sname,age,addr from stu_info;
+	declare continue handler for sqlstate '02000' set tag = 1;
+	open allData;
+		while tag = 0 do
+			fetch allData into a,b,c,d;
+			if tag = 0 then
+				insert into a values(a,b,c,d);
+			end if;
+		end while;
+	close allData;
+end
+
+
+call move_data();
+
+表的复制
+	CREATE TABLE new_table LIKE old_table;
+
+数据的复制
+	INSERT new_table SELECT * FROM old_table;
+
+2.   写个存储过程  判断学生考试的成绩  根据成绩发放奖金
+			bonus
+				id  s_id   bonus  addTime(datetime)
+
+		  100        1000
+		90---99      500
+		80---89      300
+
+	create procedure pub_bonus()
+	begin
+		declare tag int(1) default 0;
+		declare sid int(5) default 0;
+		declare fenshu int(5) default 0;
+		declare qian int(5) default 0;
+
+		declare allInfo cursor for select s.id,m.marks from stu_info s inner join marks_info m on s.id=m.s_id where m.marks>=80;
+
+		declare continue handler for sqlstate '02000' set tag = 1;
+		open allInfo;
+
+		while tag =0 do
+			fetch allInfo into sid,fenshu;
+			if tag = 0 then
+				if fenshu = 100 then
+					set qian = 1000;
+				elseif fenshu >=90 and fenshu <100 then
+					set qian = 500;
+				elseif fenshu >=80 and fenshu <90 then
+					set qian = 300;
+				end if;
+				insert into bonus values(null,sid,qian,now());
+				// 如果这个人考了2门100？
+					判断是否已经发一门
+						有:  update
+						no:  insert
+			end if;
+		end while;
+		close allInfo;
+	end
+
+	call geiBonus();
+
+7. 触发器
+	对某个表里数据进行某个[CUD]操作的时候，系统自动调用的存储过程！
+
+		一个人信息存在10张表
+			删除一个人信息
+				10条delete
+
+
+	 create trigger 触发器的名称
+
+	 before|after  操作表之前 还是之后
+
+	 insert|delete|update  调用触发器的操作
+
+	 on 表名   指定哪张表  被操作的表
+
+	 for each row    操作每条记录都会执行一次触发器的功能
+
+	 begin
+		操作代码！
+	 end
+
+
+	eg:  删除stu_info数据，把marks_info里面相关的数据删除掉
+
+	delete from stu_info where id=9;
+
+		create trigger t1
+		after
+		delete
+		on stu_info
+		for each row
+		begin
+			delete from marks_info where s_id=old.id;
+		end
+
+		// 对stu_info表的每一条记录进行删除动作之后 执行 删除marks_info表里的相关数据
+
+	insert                update               delete
+old:   没有old数据        被替换的数据       被删除的老数据
+new:   插入的记录         更新后的记录       无new数据;
+
+
+	写个触发器
+	stu_info新增一条数据的之后，判断school表是否有schoolName
+		有:  无操作
+		没有：在school表中新增数据
+
+		create trigger schoolzbz
+		after
+		insert
+		on stu_info
+		for each row
+		begin
+			declare tag int(1) default 0;
+
+			select id into tag from school where schoolName=new.schoolName;
+
+			if !tag then
+				insert into school values(null,new.schoolName,now());
+			end if;
+		end
+
+
+	触发器信息存在
+
+	information_schema数据库
+		中TRIGGERS （triggers）表
+			存储所有库中的所有触发器的信息
+
+	desc information_schema. TRIGGERS 可以看到表结构
+
+	删除： drop trigger trigger_name
+
+事务处理
+	问题	银行转账  10000       1000
+		1. 插卡
+		2. 输入密码
+		3. 选择功能
+		4. 对方帐号
+		5. 确认帐号
+		6. 输入金额
+		7. 确认信息
+		begin
+		8. 确定  5-7秒
+			1. 卡里钱够不够    select
+			2. 卡里够除1000块  update    || 停电了
+			3. 对方卡里增1000块 update
+
+			commit
+		9. ok||no
+
+	来电了：
+		问题----> 卡里 10000   对方：没有增1000
+
+	1000去哪里？
+
+		数据库数据不平衡！！
+
+事务：把某项需要处理的数据过程里的处理步骤看做是最小的数据处理单元;
+
+	把数据处理的过程 里面的需要处理的数据动作 看作一个步骤
+
+事务特点：
+	 1)最小的数据处理单元
+	 2)事务对于数据的修改是永久性;
+	 3)事务处理的数据永远保持数据库的平衡
+	 4)就是事务处理时，事务的操作是无关的
+
+
+事务处理在各种管理系统中都有着广泛的应用，比如人员管理系统，很多同步数据库操作大都需要用到事务处理。比如说，在人员管理系统中，你删除一个人员，你即需要删除人员的基本资料，也要删除和该人员相关的信息，如信箱，文章等等，这样，这些数据库操作语句就构成一个事务！
+
+	事务至少2个以上sql操作
+
+一般来说，在商务级的应用中，都必须考虑事务处理的
+
+事务处理：如果某个数据操作单元出错，你只要rollback【回滚】就可以取消所有的操作对数据库产生的影响！！（其实只要你没有commit，sql语句对数据里面数据就没实质性的影响）
+
+
+MYSQL的事务处理主要有两种方法。
+1、用begin,rollback,commit来实现
+
+	第一步：   begin 开始一个事务，并且标识上一个事务结束
+
+	第二步：	处理单元
+		第三步
+				rollback 事务回滚
+
+		最后一步
+			所有的数据处理单元都没有问题
+				commit//
+	注意：如果想终止事物处理的时候 要进行 rollback || commit
+
+存储引擎
+	innodb：支持事物
+	MYISAM：不支持事物
+
+MYSQL中只有 INNODB 和 BDB 类型存储引擎的数据表才能支持事务处理！
+其他的类型是不支持的
+
+
+2、直接用set来改变mysql的自动提交模式
+       MYSQL默认是自动提交的，也就是你提交一个sql语句，它就直接执行
+
+       我们可以通过
+      set autocommit = 0   禁止自动提交
+      set autocommit = 1   开启自动提交	  默认
+
+      设置set autocommit = 0   禁止自动提交
+	mysql每一个操作，都是一个事务!
+
+	commit   事务确认
+
+事务是必须满足4个条件（ACID）
+	1、原子性
+		事务在执行时，要做到"要么不做，要么全做！"，就是说不允许事务部分得以执行。即使因为故障而使事务不能完成，在rollback时也要消除对数据库得影响！
+	2、一致性
+		事务的操作应该使使数据库从一个一致状态转变到另一个一致得状态！就拿网上购物来说吧，你只有即让商品出库，又让商品进入顾客得购物车才能构成事务！
+
+	3、隔离性
+		如果多个事务并发执行，应象各个事务独立执行一样！排队
+	4、持久性
+		一个成功执行得事务对数据库得作用是持久得
+		 即使数据库因故障出错，也应该能够恢复！
+
+php怎么使用事务处理
+
+	begin     rollback   commit
+
+		mysql_query("beign");
+
+
+
+		$sql = "update qian set money=9000 where uid=1";
+		mysql_query($sql);
+
+		if(mysql_affected_rows()){
+
+			$sql = "delete from stu_info where id=1";
+			mysql_query($sql);
+			if(mysql_affected_rows()){
+				mysql_query("commit");
+			}else{
+				mysql_query("rollback");
+			}
+		}else{
+			mysql_query("rollback");
+		}
+
+	php中是怎么使用存储过程!
+
+
+mysql中事物与锁
+
+问题
+	事务A				事务B
+
+	update  stu_info id=12		delete stu_info id=12
+
+	提交！
+
+共享锁
+	select ........ lock in share mode;
+
+	共享锁：
+		1. 所有的事务对于 数据 都有可读性
+		2. 所有的事务都不能对数据进行写的操作
+		3. 其他事务可以上共享锁
+
+
+	A 事物         B 事物
+
+	如果A事务加上的是共享锁，B事物直接可以加上共享锁
+
+
+	事务中查找的数据，加上一个共享锁。若A事务中查找的数据已经被其他B事务加上独占锁的话，A事物共享锁会等待B事物结束再加，若等待时间过长就会显示事务需要的锁等待超时
+
+
+独占锁
+	SELECT ….. FOR UPDATE
+
+	独占锁:
+		1. 所有事务读取的数据都是老数据
+		2. 本事务可以对数据进行写入
+		3. 其他事务上不了锁
+
+
+	会话事务中查找的数据，加上一个更新琐，其他会话事务将无法再加其他锁，必须等待其结束。
+
+	INSERT、UPDATE、DELETE
+	事务会对DML语句操作的数据加上一个独占锁，其他会话的事务都将会等待其释放独占锁 才能加锁
+
+注意
+	事务1如果建立的锁，那么事务1对于数据修改，只有本身事务能够看到，其他事务看到的数据还是事务1执行前的数据;
+
+	如果事务1滚回，
+	那么数据表中数据将没有任何改变，如果事务1提交数据(commit)
+	那么事务对于表的操作将永久存在
+
+
+table锁   和  row锁
+
+行锁 和 表锁：
+
+	由于InnoDB预设是Row-Level Lock，所以只有「明确」的指定主键，
+   MySQL才会执行Row lock (只锁住被选取的记录) ，否则MySQL将
+   会执行Table Lock (将整个资料表给锁住)
+
+	假设有个表products ，里面有id跟name type三个栏位，id是主键。
+	例1: (明确指定主键，并且有此笔资料，row lock)
+	SELECT * FROM products WHERE id='3' FOR UPDATE;
+	SELECT * FROM products WHERE id='3' and type=1 FOR UPDATE;
+
+	例2: (明确指定主键，若查无此资料，无lock)
+	SELECT * FROM products WHERE id='300' FOR UPDATE;
+
+	例2: (无主键，table lock)
+	SELECT * FROM products WHERE name='Mouse' FOR UPDATE;
+
+	例3: (主键不明确，table lock)
+	SELECT * FROM products WHERE id<>'3' FOR UPDATE;
+
+	例4: (主键不明确，table lock)
+	SELECT * FROM products WHERE id LIKE '3%' FOR UPDATE;
+
+注1: FOR UPDATE仅适用于InnoDB，且必须在事物(BEGIN/COMMIT)中才能生效。
+
+
+注意：
+	MyISAM 只支持表级锁，InnoDB支持行级锁
+添加了(行级锁/表级锁)锁的数据不能被其它事务再锁定，也不被其它事务修改（修改、删除）, 是表级锁时，不管是否查询到记录，都会锁定表
+
+
+innodb的锁有三种类型：
+
+    记录锁：   是加在检索出的记录上的
+    间隙锁：   对索引出的记录间的范围加锁，或者加在最后一个索引记录的前面或者后面
+    Next-key锁：记录锁和间隙锁的组合，间隙锁 锁定 记录锁之前的范围
+
+    InnoDB引擎会自动给会话事务中的共享锁、独占锁，需要加到一个区间值域的时候，再加上个
+    间隙锁（或称范围锁），对不存在的数据也锁住，防止出现幻写
+
+数据库优化
+	1、数据库设计的优化
+		（1）：数据库的设计
+		1、对于小型的数据,不需要事物的,用MYISAM存储引擎，如果需要事物，存储的数据量大
+		用Innodb存储引擎
+
+		myisam: 查询内容少，查询的速度快，不支持事物
+		innodb: 适合大型数据库表，支持事物
+
+		2、编码问题，中文的用 gb2312   英文 utf8
+		3、编码要统一    浏览器    php文件的   数据库的
+		4、数据库中的数据如果很大、表很多,可以使用分库操作
+			数据库分布式
+			        主库    分库
+
+				 写      读     分离
+
+		（2）表的设计
+		1、表中不要存在表
+		2、设计表中不要使表中的字段过多，尽量筛选重要信息
+				使用分表模式
+					user
+					user_info
+
+		3、能设置int型尽量设置Int型、尽量的使用合适的长度和数据类型
+		4、设置默认值的尽量不要设置成null
+		5、索引设置： 主键---->唯一---->普通---->没有  检索速度递减
+			1. 普通索引
+			2. 索引名与字段名一致
+		6、MySQL在运行过程中隐含地进行转换,UTF-8是否支持多字节字符，需要更多的存储空间
+		7、使用存储过程替代php频繁的访问数据库的简单逻辑
+
+		8、设计数据库时，尽量的让设计的数据库符合第三范式
+
+
+	2、数据库操作的优化
+		1、查询尽量不要查询不必要的字段
+
+		2、尽量的不要使用模糊查询，如果必须使用，尽量的不要再规则内有'%'    like "abc";
+
+		3、使用join连接代替普通的多表连接
+		4、使用子查询，子查的深度不能过深
+
+		5、查询时将筛选条件比较大的条件往前放
+
+		6、使用聚合函数时，尽量的不要使用where语句
+
+		7、group by分组和order by排序时
+			先分组再排序
+
+		8、在插入数据时，尽量的写出被插入的字段列表，而不是*
+			insert into 表 (字段) values();
+
+			insert into 表 set 字段1=值1,.....
+
+		9、频繁的使用到多表中的数据时，建立视图
+		10、where语句多个条件时，去掉不必要的（）和不必要的条件、计算
+
+				where age>30-5
+
+		11、load插入数据  100条
+
+			插入速度：高---->低
+
+			批量插入---->多条记录插入--->单条逐一插入
+
+		load
+
+			load data infile "路径+数据文件名.txt";
+
+		load data infile "D:/data.txt" into table stu_info;
+
+		insert into 表  (字段列表) values(),(),()......
+
+
+数据库设计三大范式
+
+	第一范式
+
+	无重复的列
+
+	数据库表的每一列都是不可分割的原子数据项，而不能是集合，数组，记录等非原子数据项。
+	如果实体中的某个属性有多个值时，必须拆分为不同的属性
+
+	在任何一个关系数据库中，第一范式（1NF）是对关系模式的设计基本要求，一般设计中都必须
+	满足第一范式（1NF）。不过有些关系模型中突破了1NF的限制，这种称为非1NF的关系模型。
+	换句话说，是否必须满足1NF的最低要求，主要依赖于所使用的关系模型
+
+
+	第二范式
+
+	属性完全依赖于主键
+	第二范式（2NF）是在第一范式（1NF）的基础上建立起来的，即满足第二范式（2NF）必须先
+	满足第一范式（1NF）
+
+	当存在多个主键的时候，才会发生不符合第二范式的情况。比如有两个主键，不能存在这样的属性
+	，它只依赖于其中一个主键，这就是不符合第二范式。
+	如果存在不符合第二范式的情况，那么这个属性和主关键字的这一部分应该分离出来形成一个
+	新的实体，新实体与原实体之间是一对多的关系
+
+
+	第三范式
+
+	属性不能传递依赖于主属性（属性不依赖于其它非主键属性）
+
+	第三范式（3NF）是在第二范式（2NF）的基础上建立起来的，即满足第三范式（3NF）必须先满足
+	第二范式（2NF）
+
+	如果某一属性依赖于其他非主键属性，而其他非主键属性又依赖于主键，那么这个属性就是间接
+	依赖于主键，这被称作传递依赖于主属性
+
+
+
+		article
+			id	title	.......
+
+		goods
+			id	good_name	......
+
+		article_goods
+
+			id	aid	gid
+
+
+stu_info：
+	id  sname   age     addr
+	1    Tom     20     beijing
+	2    Lucy    23     nanjing
+	3    Lily    18     beijing
+	4    Damat   21     shanghai
+	5    jim     29     nanjing
+marks_info：
+	id   s_id    c_id   marks
+	1    1        1     65
+	2    1        2     60
+	3    3        2     70
+	4    4        2     90
+	5    5        1     100
+class_info：
+	id     c_name
+	1      chinese
+	2      english
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
