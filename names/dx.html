@@ -1,0 +1,33 @@
+<meta charset="utf-8">
+<script type="text/javascript">
+function show(){
+	document.getElementById("test1").style.display = "block";
+	document.getElementById("test2").style.display = "none";
+	document.getElementById("test3").style.display = "none";
+}
+function hide(){
+	document.getElementById("test1").style.display = "none";
+	document.getElementById("test2").style.display = "block";
+	document.getElementById("test3").style.display = "none";
+}
+function hidede(){
+	document.getElementById("test1").style.display = "none";
+	document.getElementById("test2").style.display = "none";
+	document.getElementById("test3").style.display = "block";
+}
+</script>
+<input type="radio" name="group1" value="yes" onclick="show()" checked/>显示
+<input type="radio" name="group1" value="no" onclick="hide()" />不显示
+<input type="radio" name="group1" value="noo" onclick="hidede()" />显示bu
+<div id="test1" style="display:block;width:100px;height:100px;border:1px solid black">
+        <h1>显示</h1>
+
+</div>
+<div id="test2" style="display:none;width:100px;height:100px;border:1px solid yellow">
+        <h1>不显示</h1>
+
+</div>
+<div id="test3" style="display:none;width:100px;height:100px;border:1px solid red">
+        <h1>显示bu</h1>
+
+</div>

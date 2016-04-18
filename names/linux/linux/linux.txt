@@ -1,0 +1,790 @@
+Linux的应用与发展
+Linux系统安装
+Linux常用命令
+Linux引导流程
+Linux软件包管理
+Linux用户管理
+Linux进程管理
+Linux文件系统管理
+Shell编程
+LAMP服务器的搭建
+		windows   linux   unix   mac
+
+unix介绍
+	UNIX操作系统（尤尼斯），是一个强大的多用户、多任务操作系统，支持多种处理器架构，按照操作系统的分类，属于分时操作系统，最早由KenThompson、DennisRitchie和DouglasMcIlroy于1969年在AT&T(美国的一家电信公司)的贝尔实验室开发
+
+	1965年时，贝尔实验室（Bell Labs）加入一项由通用电气（General Electric）和麻省理工学院（MIT）合作的计划；该计划要建立一套多使用者、多任务、多层次（multi－usr、multi－processor、multi－level）的MULTICS操作系统。直到1969年因MULTICS计划的工作进度太慢，该计划被停了下来
+
+
+	MULTICS其实是"Multiplexed Information and Computing Service"的缩写，在1970年时，那部PDP－7却只能支持两个使用者，当时，Brian Kernighan就开玩笑地称他们的系统其实是："UNiplexed Information and Computing Service"，缩写为"UNICS"，后来，大家取其谐音，就称其为"UNIX"了。1970年可称为"UNIX元年"。
+
+	Ken Thompson的小型file server system
+	1971年，Ken Thompson写了充分长篇的申请报告，申请到了一台PDP-11/24的机器。于是Unix第一版出来了。在一台PDP-11/24的机器上完成。这台电脑只有24KB的物理内存和500K磁盘空间。Unix占用了12KB的内存，剩下的一半内存可以支持两用户进行Space Travel的游戏
+
+	
+	1973年的时候，Ken Thompson(肯·汤普逊) 与Dennis Ritchie(丹尼斯·里奇)感到用汇编语言做移植太过于头痛，他们想用高级语言来完成第三版，他们用一个叫BCPL（Basic Combined Programming Language）的语言开发，他们整合了BCPL形成B语言，后来Dennis Ritchie觉得B语言还是不能满足要求，于是就改良了B语言，这就是今天的大名鼎鼎的C语言。于是，Ken Thompson 与Dennis Ritchie成功地用C语言重写了Unix的第三版内核。至此，Unix这个操作系统修改、移植相当便利，为Unix日后的普及打下了坚实的基础。而Unix和C完美地结合成为一个统一体，C与Unix很快成为世界的主导
+
+Unix主要版本
+	贝尔—system V
+	伯克莱大学—BSD
+
+	Unix在开发的过程中，没有任何的奖励制度和管理，从一开始在AT&T公司出现时，其是一种近似于好奇或兴趣的东西。
+	然而，20世纪70年代，AT&T公司开始注意到Unix所带来的商业价值。公司的律师开始寻找一些手段来保护Unix，并让其成为一种商业机密。从1979年Unix的版本V7开始，Unix的许可证开始禁止大学使用Unix的源码，包括在授课中学习
+
+	到了1980年，有两个最主要的Unix的版本线，一个是Berkeley的BSD UNIX，另一个是AT&T的Unix，在这个时候，很显然，竞争最终引发了Unix的战争。在这场战争中，好的是，软件开发人员还是能够得到Unix的源码并对其按照自己的需要和兴致进行裁剪。而不好的是，Unix开始一发不可收拾地开发不停地出现各种各样的变种。
+
+	1982年，Joy创建了Sun Microsystems公司并提供了工作站–Sun-1，运行SunOS。而AT&T则在随后的几年中发布了Unix System V的第一版，一个具有强大影响力的操作系统，最终造就了IBM的AIX和HP的HP-UX。
+
+	AIX,HP-UX,Solaris等等
+	
+	FreeBSD和linux分支
+		FreeBSD是一个自由的(英文free也可以说是免费的)类UNIX操作系统(Unix-like)，经由BSD UNIX由AT&T UNIX衍生而来，FreeBSD由于法律原因不能称为UNIX，但由于直接衍生于BSD UNIX，并且一些原来BSD UNIX的开发者后来转到FreeBSD的开发，使得FreeBSD在内部结构和系统API上和UNIX有很大的兼容性。由于FreeBSD宽松的法律条款，其代码被好多其他系统借鉴包括苹果公司的MacOS X，正因此由于MacOS X的UNIX兼容性，使得MacOS X获得了UNIX商标认证
+
+				linux   
+Linux系统简介
+	Linux是一套免费使用和自由传播的类Unix操作系统，是一个基于POSIX(可携式操作系统接口)和UNIX的多用户、多任务、支持多线程和多CPU的操作系统。它能运行主要的UNIX工具软件、应用程序和网络协议。它支持32位和64位硬件。Linux继承了Unix以网络为核心的设计思想，是一个性能稳定的多用户网络操作系统。
+
+	Linux操作系统诞生于1991年的10 月5 日（这是第一次正式向外公布的时间）
+	
+	Linux存在着许多不同的Linux版本，但它们都使用了Linux内核。Linux可安装在各种计算机硬件设备中，比如手机、平板电脑、路由器、视频游戏控制台、台式计算机、大型机和超级计算机。严格来讲，Linux这个词本身只表示Linux内核，但实际上人们已经习惯了用Linux来形容整个基于Linux内核，并且使用GNU工程各种工具和数据库的操作系统。
+	
+	1979年—AT&T在第七版UNIX进行了版权声明,不可向学生提供代码
+	
+	1984年—Minix诞生（谭宁邦教授） 为了教学，在不看unix源码的情况下,编写出了Minix。  min-nuix
+
+	1984年—GUN项目（史托曼—自由软件）,产生了很多软件
+
+	1988年—X window    图形用户接口  next window
+
+	1990年—GCC(编译器)、bash shell(用来操作操作系统的基本接口)  GUN项目开发的几个重要的软件，为很多的软件开发者提供基础开发工具进行程序开发，但是因为没有"自由的unix内核"存在，所以这些软件仍只能在那些授权的unix平台上工作，直到linux的出现
+
+	1991年—芬兰的赫尔辛大学的 Torvalds(托瓦兹)在BBS上宣称，他以bash和GCC等工具，发布了linux源代码。
+		大学时候接触谭宁邦的minix
+		发布于BBS上供大家下载，进行修改，测试。
+		广大志愿者加入，发展非常迅速
+		虚拟团队，来自地球各个角落，素未谋面。
+		在1994年发布了linux 1.0版本，加入了 x window system的支持
+		1996年 2.0版本发布
+		
+	注：POSIX 标准主要针对于unix与一些软件运行的标准规范
+
+Linux的主要版本
+	Redhat 
+		是全球最大的开源技术厂家，其产品Red Hat Linux也是全世界应用最广泛的Linux。Red Hat公司总部位于美国北卡罗来纳州
+	Turbolinux  简单易用的图形安装程序
+	Centos 
+		是一个基于Red Hat Linux 提供的可自由使用源代码的企业级Linux发行版本。每个版本的 CentOS都会获得十年的支持（通过安全更新方式）。新版本的 CentOS 大约每两年发行一次，而每个版本的 CentOS 会定期（大概每六个月）更新一次，以便支持新的硬件。这样，建立一个安全、低维护、稳定、高预测性、高重复性的 Linux 环境。CentOS是Community Enterprise Operating System的缩写。
+	红旗linux
+		是由北京中科红旗软件技术有限公司开发的一系列Linux发行版,是中国较大、较成熟的Linux发行版之一,完善的中文支持,与Windows相似的用户界面
+	Gentoo linux
+	Novaell
+	Suse
+	Ubuntu 是基于Debian GNU/Linux
+
+自由软件	任何人只要遵循    GPL，是General Public License的缩写
+		是一份GNU通用公共授权
+	使用的自由
+	研究的自由
+	散布的自由
+	改良的自由
+
+Linux应用领域
+	各类服务器
+	网络应用—防火墙、路由器、DPI等
+	科学运算
+	嵌入式应用
+
+了解服务器信息
+	http://www.netcraft.com
+
+嵌入式应用
+	智能识别系统
+	掌上电脑，手机，智能家电
+	路由器，机顶盒，数码相机，MP4等等
+
+搭建学习环境
+
+	选择适合入门的linux    CentOS
+	建议使用虚拟机
+	忘记windows的思维方式
+
+
+Linux系统安装
+	VMware或oracle虚拟机软件安装
+
+	主要特点：
+		不需要分区或重新开机就能在同一台PC上使用两种以上的操作系统。
+		本机系统可以和虚拟机系统网络通信
+		可以设定并且随时修改虚拟机操作系统的硬件环境
+
+	CPU  内存   硬盘   主板   电源    光驱   显卡  显示器  键盘  鼠标 
+
+
+	window   先分区     再建立文件  目录  
+
+		linux    先目录<--- 挂载 ----分区
+
+		  /  根目录
+		  /home
+		  /boot
+		  ...
+
+
+	Linux系统的安装设置
+		1.分区
+			文件类型：  
+				ext3 和 ext2    选择ext3  文件系统多了日志的记录
+
+			/       文件类型ext3 根分区  10G
+			/boot   文件类型ext3 独立分区,强制为主分区 100MB
+			swap    文件类型swap 内存交换分区  理论上和内存一样大小 现在：x2
+			/home   文件类型ext3 5G
+
+		
+		2. 引导装载程序的处理
+			使用grub软件引导程序，必须把它安装MBR里面才行
+
+				/dev/sda1  就是代表MBR的意思
+
+		3. 网路参数设置
+			
+		4. 时区选择
+			夏令时关闭
+		5. 设置root密码
+
+Linux的基本思想有两点：
+	第一，一切都是文件
+	
+	第二，每个软件都有确定的用途。其中第一条详细来讲就是系统中的所有都归结为一个文件，包括命令、硬件和软件设备、操作系统、进程等等对于操作系统内核而言，都被视为拥有各自特性或类型的文件。至于说Linux是基于Unix的，很大程度上也是因为这两者的基本思想十分相近
+
+
+
+学习方法
+	为什么选择命令行
+		节约资源
+		同时管理众多服务器
+	英文提示符的困惑
+		Command not found   
+		No such file or directory
+	解决问题的智慧
+		留意系统提示
+		查看帮助文档，示例。Man命令。
+		利用网络
+
+windows与虚拟机下的linux通信
+
+	要实现windos与虚拟系统的通信，需要选择网桥模式或者NAT模式
+
+	hostOnly不能外网
+
+	windos本地连接断开时
+		如果是网桥模式，要想通信，需要创建一个微软的虚拟网卡
+
+		如果是NAT模式，没有问题
+
+ifconfig查看网卡信息
+	eth0  第一块网卡信息
+
+重启网卡命令
+	service network restart | stop | start
+
+
+远程登录管理工具介绍
+	Putty  PuTTY_0.60.exe（命令行软件，免费）
+
+	用户登录成功后系统缺省的提示符：
+		普通用户为“$”、超级用户root为”#”
+	用户退出系统的方法有两种：
+		1、键入命令：exit或者logout
+		2、在提示符下Ctrl+D组合键
+
+
+Linux的常用命令
+	文件|目录命名规则
+		除了 / 之外，所有的字符都是合法的
+		有些字符最好不要用，如空格符，制表符，退格符~！@#￥%……&*（）——等。
+		避免使用.作为普通文件的第一个字符
+			.XXXX 隐藏文件
+		大小写敏感
+
+	命令格式
+		命令  -选项  参数
+			例：ls  -la  /etc
+		两个特殊的目录 . 和 .. 分别是当前目录和父目录。
+
+命令分类
+	文件处理命令
+	权限管理命令
+	文件搜索命令
+	帮助命令
+	压缩解压命令
+	网络通信命令
+	系统关机命令
+	Shell应用技巧
+
+1.  关闭防火墙
+	setup
+	
+2.文件处理命令
+	1. cd  进入|改变目录                 /
+		
+		cd -   返回上次操作的目录
+		cd ..  返回上级目录
+		cd .   进入本目录 
+		
+		cd 相对路径 或 绝对路径
+			相对路径： 相对于现在所在的位置去写路径
+			绝对路径： 从 / 开始写起
+		.  代表本目录
+		.. 代表父目录
+
+		cd  | cd ~   进入宿主目录  
+			root       宿主目录    /root
+			普通用户   宿主目录    /home/用户名
+
+	2. ls   显示目录下的子目录及其子文件
+		格式： ls -选项 参数
+			ls  显示
+			ls  -l  详细显示
+			ls  -la 显示所有文件 包括隐藏
+			ll == ls -l			
+	
+	3. 文件 权限的意义
+		ls -l   ||   ll
+
+	drwxr-xr-x   4 root root  4096 07-28 14:44 home
+	
+	drwxr-xr-x 10个字符的含义
+		第一个字符代表文件属性
+			d 目录directory
+			- 二进制文件
+			l 软连接文件link
+
+		后面9个字符代表的 权限
+
+			权限：r-read读 w-write写 x-execute执行
+
+			有三种用户对于文件||目录拥有权限
+
+			u-user所有者 g-group所属组 o-other其他人
+
+		4       硬连接数  
+
+		root   代表的是所有者
+		root   代表的是所属组
+		
+		4096    大小（block-512字节）
+
+		04-02 16:46  最后修改时间	
+
+		home   文件||目录名
+
+	4.   pwd   查看所在路径	
+	5.   touch 文件名  创建文件
+	6.   mkdir 目录名  创建目录
+		mkdir -p  目录/目录/目录.....  递归创建
+
+	7.   cp 文件1 文件2  目录  (把文件1、文件2 复制到目录中)
+
+		cp -R  目录1 目录2  把目录1复制到目录2里面，包含子文件
+
+		cp -r  带创建时间和属性一起复制
+
+	8.   mv  源文件或者目录  目标目录------>剪切
+
+		mv 文件名||目录  新文件名||新目录名  重命名在来一次
+	
+	9.   rm    删除文件 || 目录
+	     rmdir 删除空目录
+		
+		rm -r  递归处理，将指定目录下的所有文件及子目录一并处理。 需要确认
+
+		rm -i  需要确定 
+		rm -f  不需要确认
+
+		rm -rf 删除目录||文件不需要确认 包括子目录和子文件
+	
+	10.  查看文件
+		echo 字符 >> 文件   把字符写在文件末尾 
+		echo 字符  > 文件   字符覆盖
+
+		cat 文件  (适合短文件)
+
+		more 文件（分页显示。回车下一行、空格下一页、q为退出）
+
+		head -num 文件  查看文件前几行
+		tail -num 文件  查看文件后几行
+
+
+		ln -s  绝对路径/源文件  目标文件   建立软连接
+		ln    绝对路径 源文件  目标文件    建立硬连接
+			软件连接文件权限都为 lrwxrwxrwx 有-->指向符号，时间是软连接创建时间,相当于windows快接方式，可以跨分区
+
+			硬连接，除了位置不一样，其他和源文件全一样，类似拷贝+时间同步更新的，一般用于重要文件的实时备份，不可跨分区
+
+		ls -i [文件]  显示文件||目录的inode编号。
+			inode  i 节点，文件的数字标识 	
+
+			linux 每个文件都有一个数字编号!!
+
+	11.   改变文件/目录的权限
+		文件||目录--> 所有者user   所属组 group   其他人other
+
+		权限：
+			read--r	write--w  execute--x
+
+		chmod u+wx  chmod o-rw  chmod g+rx  文件||目录   但不常用
+	
+
+		r-4  w-2  x-1       0-7
+
+		读    写   执行
+
+		实用：  chmod 755 文件||目录
+
+		权限意义：
+
+			文件                目录
+		r     能查看文件的内容   可以列出目录中内容
+		w     可以修改           可以在目录中创建,删除文件
+		x     可以执行文件       可以进入目录
+
+
+		目录不允许普通用户删除，普通用户是不能删除目录下的任何子文件||子目录，哪怕子文件||子目录的权限是777
+		
+		目录允许普通用户删除，子文件没有写权限，普通用户是可以删除这个子文件的，但是不能往子文件里写内容
+
+
+		su: 切换用户命令
+			su  username
+
+			root------>username  无需密码
+			user------>root      密码
+			username--->username 密码
+
+		chown 改变文件或者目录的所属者
+		
+	12. 文件搜索命令
+		which ls   找ls命令的绝对命令
+
+		whereis ls  查找文件
+			找到ls命令的绝对路径,别名信息,帮助文档路径	
+			ls: /bin/ls 
+			/usr/share/man/man1p/ls.1p.gz /usr/share/man/man1/ls.1.gz
+	
+		find 路径 参数 关键字
+			find /etc -name init*
+			
+			在/etc目录寻找名字为init开头的
+
+			-name 根据文件名来查找，
+				ex：find /etc -name init
+				    find /etc -name i?i*(*匹配任意字符,？匹配单个字符)
+			-size 根据文件大小查找文件
+			      find /etc -size +204800  文件大小 >200MB
+				1MB=1024KB=1024*1024B
+                                 大于 + ，小于 - 
+				eg:  find / -size +204800
+			-user 根据文件的所有者
+				ex: find /home –user liujian
+
+	        grep 在文件中匹配字符
+			grep  abc 文件    在文件中匹配abc字符
+
+			grep -i  abc  文件 忽略字符大小写
+
+			
+			ll /etc/  |  grep httpd
+
+			在/etc/里面查看包含 httpd 的目录或者文件
+
+			cat http.conf | grep 80
+
+			匹配httpd.conf 含有80字符的行
+
+	13.  帮助命令  
+		man 命令 (命令的版主 默认是第一种，一共5种)
+			man ls
+		man 5 ls 服务的帮助，第五种为查看配置文件的
+
+		info ls（和man一样）
+
+		whatis ls（简单的帮助信息，提取最基本的用途）
+
+		命令 --help
+			ls --help（列举主要的选项/参数)
+
+	14.  解压 压缩的命令
+	
+		file 文件   查看文件是什么类型的文件
+
+		gzip------>文件类型为  .gz    压缩文件
+			1. 只能压缩文件，不能压缩目录
+			2. 不保留源文件
+			
+			压  缩：gzip [文件]
+			解压缩：gzip -d [文件] || gunzip [文件] 
+
+		tar------->文件类型  .tar.gz   压缩文件||目录
+			先打包目录,在用gzip压缩成 .tar.gz
+			-c	打包
+			-x	解包
+			-v	显示压缩||解压过程信息
+			-f	制定压缩后的文件名
+			-z	打包同时压缩(不是所有linux都支持)
+
+		压缩
+			tar -zcvf  XXXX.tar.gz  文件||目录
+		解压   
+			tar -xvf  XXX.tar.gz
+
+	15.  网络通信
+		write 用户名 回车
+		信息
+			给用户发信息  前提 必须登录
+		
+		ctrl+C 退出
+
+		wall  信息  给所有的用户发信息
+
+		ping 测试网络是否通 丢包率
+			ping 127.0.0.1  ping 回环地址
+				通： 证明tcp/ip协议Ok
+
+			-c  次数 ping -c 5 www.baidu.com
+			-s 包大小  最大65507
+
+		ifconfig   查看网卡
+			-a   查看所有网卡
+			ifconfig
+			ifconfig eth0
+			ifconfig eth0 [新地址](重新开机失效，永久生效需要改配置文件)  baidu一下
+
+		网络环境改变  重启网卡
+
+		重启网卡
+			service network restart | stop | start
+
+	16. shutdown -h now  现在关机   shutdown -h 18:00
+            reboot  重启 
+
+	shell 应用技巧
+		bash常用
+			<Tal>  命令补全 文件补全  目录补全
+			clear 清屏  或者 ctrl+l
+			ctrl+U 删除光标前的所有字符
+			history 命令历史  !num 直接执行history中的这个命令
+			上下键查找执行过的命令
+
+
+
+第二天的课
+
+	文本编辑器   vim/vi
+		vim 文本名称
+
+		插入模式  i    退出 esc   退出i模式
+		
+		操作  摁 :    退出q   保存退出wq   强制退出 q!
+		
+		常用命令
+			:set nu   设置行号
+			:set nonu 取消行号
+
+			x    删除光标所在处的字符
+			dd   删除光标所在的行 ndd删除 n行
+			yy | Y  复制当前行, nyy复制当前一下n行
+			p    黏贴
+
+			/string  当前搜索指定字符串   
+				 搜索时忽略大小写 :set ic
+
+			:n    搜索指定搜索行号
+			:wq   保存退出
+			:q!   不保存修改退出 强制退出
+			:wq!  保存修改并退出(文件所有者可忽略只读属性)
+
+			导入文件	
+			:r /etc/wenjian （导入其他文件的内容到编辑文件中）
+
+			在vi/vim中执行命令	
+				:!ls -l /etc      (可以在编辑中运行命令)
+
+
+		vi|vim的配置文件
+
+			配置文件  ~宿主目录  普通用户   /home/用户名
+					       root      /root
+			~/.vimrc (vim的配置文件)
+			 set nu
+			 set ic || set noic
+
+	linux  引导流程
+		1，固件firmware（CMOS/BIOS）→POST加电自检
+
+		检测硬件
+
+		CPU  主板  硬盘  内存  电源
+
+
+		2，自举程序mbr-BootLoader(GRUB) ->载入内核（grub配置文件 /etc/grub.conf）
+
+		3，载入内核Kernel  ->  驱动硬件
+
+		4，启动进程init
+
+		5，读取执行配置文件  /etc/inittab
+
+		内核：一个文件(源代码文件多个，编译后就一个压缩文件)
+				ls -l /boot/vmlinuz-2.6.18-194.el5
+
+				内核只做两件事：
+					1，驱动硬件。
+					2，启动一个进程init
+
+		init进程：PID恒为1，PPID父进程0（Kernel scheduler内核调度器）	
+			父进程终止，子进程必终止。
+		
+		firmware	cmos/bios
+		    |
+		BootLoader	GRUB
+		    |
+		  kernel	驱动硬件
+		    |
+		   init		PID=1
+		    |
+		/etc/inittab	id:5:action:process
+		    |
+		initdefault	缺省运行级别：0-关机，1-s，2-命令行,3-带网络的命令行,4-自定义,5-Xwindow,6-重启
+		    |
+		/etc/rc.d/rc.sysinit	脚本-系统初始化，任何级别都会执行
+		    |
+		/etc/rc.d/rc		脚本，判断运行级别	
+		    |
+		/etc/rc.d/rcN.d         N=0-6启动相应运行级别的服务脚本。
+		
+		S-start，K-kill
+		    |
+		usrname & password
+		
+		配置文件inittab
+				0-关机 
+				1-单用户模式（类似Windows安全模式）只有root登录、没有图形界面
+				2-多用户模式，不启用NFS，命令行界面
+				3-完整多用户模式，命令行界面NFS--Linux/UNIX文件共享
+				4-自己定制
+				5-多用户的图形界面（默认级别） X11， X11R6，xfree86
+				6-重启 
+		改变运行级别：
+			id:5   运行级别  
+			把5改成3  直接命令行启动   
+			
+		cd /etc/rc.d/rc3.d     放的3级别的所有服务  可以自定义开启或者关闭
+			k  表示关闭
+			s  表示开启
+				
+			开启命令 或者关闭
+			chkconfig --list httpd  
+				查看httpd在7个运行级别的状态
+
+			chkconfig --level 35 httpd on|off
+						  开启|关闭
+		运行级别
+			runlevel  查看运行的级别 
+			init 0-6  动态改变运行的级别
+
+			
+		dmesg  是系统启动信息 特别是硬件相关
+			dmesg  |  grep eth0   网卡
+
+
+		系统日志文件  linux 所有的log都放在/var/log 目录
+			messages  服务启动相关信息
+
+			grep syslog /var/log/messages  系统启动信息
+
+
+	硬盘： df 命令   df -H|h
+
+		sda   硬盘    /dev/   这个目录是硬件挂在目录
+
+	(老)并口 ide    hd     hda  第一块硬盘        hda1 第一个分区 
+
+	(新)串口 sata   sd     sda  第一块硬盘        sda1  第一个分区
+	
+
+	系统崩溃处理方法
+		GRUB 手动引导
+			GRUB 进入单用户进行修复
+			GRUB 命令行，进行手动引导
+		光盘启动  F5 进入修复模式，进入系统 手动修复
+
+	
+	网站开发完毕------>上传到服务器
+
+	   FTP 工具   文件上传   协议   FTP 
+		ip地址
+		ftp用户名
+		ftp密码
+
+		数据库ip----->localhost
+		用户名
+		密码
+
+	   ssh 工具   文件上传   协议   ssh
+		
+		连接linux服务器  上传文件
+
+	linux 软件包管理 
+		
+		二进制软件包管理
+		Webmin是目前功能最强大的基于Web的linux系统管理工具。管理员通过浏览器访问Webmin的各种管理功能并完成相应的管理动作
+
+		rpm 软件包依赖关系比较复杂
+	
+		rpm包管理
+				rpm 软件包名称
+
+			rpm包安装:     rpm -ivh 软件包名
+				-i 安装  v 显示详细信息  h 显示进度
+					rpm -ivh 软件包
+
+			查询是否已经安装
+				rpm -qa   查看所有的软件
+
+				rpm -qa 软件名  校验|查看软件是否安装
+			
+			rpm卸载       rpm -e 软件名 
+
+
+
+			webmin默认使用 10000端口
+
+			http://ip:10000
+
+
+	
+		yum包管理
+			使用yum命令去管理软件，使用yum云
+
+			1. 自动解决软件包依赖关系
+			2. 方便软件包升级
+			3. 需要使用互联网的 yum云
+
+			安装       yum install 软件名
+			检测升级   yum check-update 软件名
+			升级       yum update 软件名
+			软件包查询 yum list 软件名
+			软件包信息 yum info 软件名
+			卸载       yum remove 软件名
+			帮助       yum --help,  man yum
+		
+		yum定向到光盘
+			
+			1.  挂载光盘
+				光驱自动挂载到  /media/目录
+			   把 /etc/yum.repos.d/CentOS-Base.repo 剪切到其他的目录 
+
+			   配置  /etc/yum.repos.d/CentOS-Media.repo  文件
+
+				修改配置 
+					baseurl=file://  /media/CentOS_5.5_Final
+					enabled=0 修改为1  启用
+
+			2. 安装
+				yum list gcc
+				yum list gcc-c++
+				yum list samba  查看这三个软件
+
+				如果没有安装 就进行yum install  名称
+
+			
+		总结： 安装 卸载用 yum    
+	               查询用rpm 校验用rpm 
+		       rpm -qa 软件名
+
+
+		源代码包安装   XX.tar.gz
+
+		1.可看，可改，可定制
+		2.适用性广，同一源代码包在UNIX、Linux上都可用
+			rpm只支持RedHat系列的Linux
+		3.源代码包安装过程：
+
+
+		1. tar -zxvf libxml2-2.6.30.tar.gz （解压源代码包）
+
+		2. 解压完成肯定会有软件包目录 cd ...
+
+		3. 解压目录肯定有configure这个配置文件
+
+		4. 解压目录 
+			./configure --prefix=/usr/local/libxml2
+			
+			(配置过程：收集系统信息的过程)（--prefix 指定安装目录，一般习惯/usr/local，方便管理，因为不能rpm智能卸载）
+
+		安装c的编译器 gcc gcc-c++（yum 安装，因为库文件依赖关系复杂）
+		
+		5. make（编译：在解压目录下 make）
+		6. make install（安装）
+
+		总结：
+			源码包
+			1. 解压 tar -zxvf 源码包
+			2. cd 解压目录
+			3. 收集硬件信息
+				解压目录
+					./configure --prefix=/usr/local/(安装目录)
+			4. make 编译 
+			5. make install 安装
+
+		用 rpm -qa 软件名检测是否安装了此软件
+
+		删除：  手动 rm -rf /usr/local/安装目录
+
+
+	
+		脚本安装
+			分为shell脚本安装
+			  sh   XXXX.sh
+
+			Java脚本安装(Openoffice)
+
+		安装libmcrypt
+
+		touch libmcrypt.sh
+
+			tar -zxvf libmcrypt-2.5.8.tar.gz &&
+			cd libmcrypt-2.5.8 &&
+			./configure --prefix=/usr/local/libmcrypt &&
+			make &&
+			make install
+
+		sh libmcrypt.sh
+
+
+	出现问题常见解决方案
+
+		man --help
+		rpm -qa | grep 软件包
+
+		
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

@@ -1,0 +1,140 @@
+<!DOCTYPE HTML>
+<html>
+	<head>
+		<title>Jquery课程</title>
+		<meta charset="utf-8"/>
+		<style>
+		*{margin:0px;padding:0px; font:12px "微软雅黑";}
+		ul{list-style:none;}
+		a{text-decoration:none;}
+		.menu{width:220px;height:700px;border:1px solid red;margin:0px auto;}
+		.menu .list{margin-top:10px;}
+
+		.bg1{background:#cc0066;color:#FFF;}
+		.bg2{background:#99ff99;color:#660033;}
+
+
+		.menu .list h2{width:220px;height:30px;font-size:16px;line-height:30px;text-align:center;cursor:pointer;}
+
+		.menu .list ul li{border-bottom:1px solid red;height:25px;line-height:25px;padding-left:20px;display:none;margin-top:10px;}
+
+		</style>
+		<script type="text/javascript" src="./jquery-1.8.3.js"></script>
+		<script type="text/javascript">
+		var tag = 1;
+		$(function(){
+			$(".menu .list h2").click(function(){
+				if($(this).hasClass("bg1")){
+					$(".menu .list ul li").slideUp(100);
+					$(".menu .list h2").removeClass("bg2").addClass("bg1");
+					$(this).next().children("li").slideDown(100);
+					$(this).removeClass("bg1").addClass("bg2");
+				}else{
+					$(this).next().children("li").slideUp(100);
+					$(this).removeClass("bg2").addClass("bg1");
+				}
+
+			})
+		})
+		</script>
+	</head>
+	<body>
+
+		<div class="menu">
+			<ul>
+				<li class="list" style="margin-top:0px;">
+					<h2 class="bg1">第一章:认识Jquery</h2>
+					<ul>
+						<li><a href='http://www.baidu.com'>你是都比</a></li>
+						<li><a href='http://www.baidu.com'>你是都比</a></li>
+						<li><a href='http://www.baidu.com'>你是都比</a></li>
+						<li><a href='http://www.baidu.com'>你是都比</a></li>
+						<li><a href='http://www.baidu.com'>你是都比</a></li>
+					</ul>
+				</li>
+				<li class="list" >
+					<h2 class="bg1">第二章:认识Jquery</h2>
+					<ul>
+						<li><a href='http://www.baidu.com'>你是都比</a></li>
+						<li><a href='http://www.baidu.com'>你是都比</a></li>
+						<li><a href='http://www.baidu.com'>你是都比</a></li>
+						<li><a href='http://www.baidu.com'>你是都比</a></li>
+						<li><a href='http://www.baidu.com'>你是都比</a></li>
+					</ul>
+				</li>
+				<li class="list" >
+					<h2 class="bg1">第三章:认识Jquery</h2>
+					<ul>
+						<li><a href='http://www.baidu.com'>你是都比</a></li>
+						<li><a href='http://www.baidu.com'>你是都比</a></li>
+						<li><a href='http://www.baidu.com'>你是都比</a></li>
+						<li><a href='http://www.baidu.com'>你是都比</a></li>
+						<li><a href='http://www.baidu.com'>你是都比</a></li>
+					</ul>
+				</li>
+				<li class="list" >
+					<h2 class="bg1">第四章:认识Jquery</h2>
+					<ul>
+						<li><a href='http://www.baidu.com'>你是都比</a></li>
+						<li><a href='http://www.baidu.com'>你是都比</a></li>
+						<li><a href='http://www.baidu.com'>你是都比</a></li>
+						<li><a href='http://www.baidu.com'>你是都比</a></li>
+						<li><a href='http://www.baidu.com'>你是都比</a></li>
+					</ul>
+				</li>
+				<li class="list" >
+					<h2 class="bg1">第五章:认识Jquery</h2>
+					<ul>
+						<li><a href='http://www.baidu.com'>你是都比</a></li>
+						<li><a href='http://www.baidu.com'>你是都比</a></li>
+						<li><a href='http://www.baidu.com'>你是都比</a></li>
+						<li><a href='http://www.baidu.com'>你是都比</a></li>
+						<li><a href='http://www.baidu.com'>你是都比</a></li>
+					</ul>
+				</li>
+				<li class="list" >
+					<h2 class="bg1">第六章:认识Jquery</h2>
+					<ul>
+						<li><a href='http://www.baidu.com'>你是都比</a></li>
+						<li><a href='http://www.baidu.com'>你是都比</a></li>
+						<li><a href='http://www.baidu.com'>你是都比</a></li>
+						<li><a href='http://www.baidu.com'>你是都比</a></li>
+						<li><a href='http://www.baidu.com'>你是都比</a></li>
+					</ul>
+				</li>
+				<li class="list" >
+					<h2 class="bg1">第七章:认识Jquery</h2>
+					<ul>
+						<li><a href='http://www.baidu.com'>你是都比</a></li>
+						<li><a href='http://www.baidu.com'>你是都比</a></li>
+						<li><a href='http://www.baidu.com'>你是都比</a></li>
+						<li><a href='http://www.baidu.com'>你是都比</a></li>
+						<li><a href='http://www.baidu.com'>你是都比</a></li>
+					</ul>
+				</li>
+				<li class="list" >
+					<h2 class="bg1">第八章:认识Jquery</h2>
+					<ul>
+						<li><a href='http://www.baidu.com'>你是都比</a></li>
+						<li><a href='http://www.baidu.com'>你是都比</a></li>
+						<li><a href='http://www.baidu.com'>你是都比</a></li>
+						<li><a href='http://www.baidu.com'>你是都比</a></li>
+						<li><a href='http://www.baidu.com'>你是都比</a></li>
+					</ul>
+				</li>
+				<li class="list" >
+					<h2 class="bg1">第九章:认识Jquery</h2>
+					<ul>
+						<li><a href='http://www.baidu.com'>你是都比</a></li>
+						<li><a href='http://www.baidu.com'>你是都比</a></li>
+						<li><a href='http://www.baidu.com'>你是都比</a></li>
+						<li><a href='http://www.baidu.com'>你是都比</a></li>
+						<li><a href='http://www.baidu.com'>你是都比</a></li>
+					</ul>
+				</li>
+			</ul>
+		</div>
+
+
+	</body>
+</html>
