@@ -14,3 +14,4 @@ http://demo.html5cn.org/index.php?page=5      html5效果下载
 http://caibaojian.com/javascript-stoppropagation-preventdefault.html     JavaScript停止冒泡和阻止浏览器默认行为
 http://blog.csdn.net/yipiankongbai/article/details/17404247    句柄和指针
 http://www.cnblogs.com/liyanwei/p/d54a030eade4b6e78831ba6ca453c273.html   学习
+http://11.zhuanti.ithao123.cn/            laravel学习
