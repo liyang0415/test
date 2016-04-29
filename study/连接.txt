@@ -15,4 +15,12 @@ http://caibaojian.com/javascript-stoppropagation-preventdefault.html     JavaScr
 http://blog.csdn.net/yipiankongbai/article/details/17404247    句柄和指针
 http://www.cnblogs.com/liyanwei/p/d54a030eade4b6e78831ba6ca453c273.html   学习
 http://11.zhuanti.ithao123.cn/            laravel学习
+http://www.cnblogs.com/xiaowei0705/archive/2011/04/19/2021372.html    本地存储  localStorage和sessionStorage
+
+
+
+
+
+
+
 http://www.w3cfuns.com/notes/17942/c6feb528d5cea0b68e3b82139f5ca2c0.html      爆破效果
