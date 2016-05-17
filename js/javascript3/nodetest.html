@@ -1,0 +1,30 @@
+<html>
+	<head>
+		<title>DOM节点生成</title>
+		<script language="javascript">
+		function createChars(){
+			var chars = ['A','B','C','D','E','F','G','H','I','J','K','L','M','N','O','P','Q','R','S','T','U','V','W','X','Y','Z','0','1','2','3','4','5','6','7','8','9'];
+			// 得到随机字符
+			var tmp = Math.round(Math.random()*(chars.length-1));
+			var span = document.createElement("span");
+			span.style.top = Math.round(Math.random()*600)
+			span.style.left = Math.round(Math.random()*900)
+			document.body.appendChild(span);
+
+			var span_text = document.createTextNode(chars[tmp]);
+			span.appendChild(span_text);
+			
+		}
+		window.onload = function(){
+			// 随机在屏幕不同位置，生成不同的字母
+			var t = setInterval("createChars()",1000);
+		}
+		</script>
+		<style type="text/css">
+			span{position:absolute;left:0px;top:0px;background:#999999;color:white;display:block;width:30px;height:30px;text-align:center;line-height:30px;font-size:30px;}
+		</style>
+	</head>
+	<body>
+		
+	</body>
+</html>

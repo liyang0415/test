@@ -1,0 +1,47 @@
+<html>
+	<head>
+		<title>DOM节点访问</title>
+		<script language="javascript">
+		   // 作业是: 在屏幕中随机位置显示随机字符，点击字符后可以删除该字符
+			var obj ="";
+		   function createfile(){
+			  var obj = document.getElementById("files");
+			  var len = obj.childNodes.length/3+1;  // 求的几个file控件
+
+			  var obj_file = document.createElement("input");
+			  obj_file.setAttribute("type","file");
+			  obj.appendChild(obj_file);
+
+			   var obj_span = document.createElement("span");
+			   var obj_textnode = document.createTextNode("第"+len+"文件");
+			  obj.appendChild(obj_span);
+			  obj_span.appendChild(obj_textnode);
+
+			  var obj_br = document.createElement("br");
+			  obj.appendChild(obj_br);
+		   }
+			window.onload = function(){
+				var bt_add = document.getElementById("bt_add");
+				var bt_del = document.getElementById("bt_del");
+				bt_add.onclick = function(){
+					createfile();
+				}
+				bt_del.onclick = function(){
+					 var obj = document.getElementById("files");
+					 if(obj.childNodes.length<=3){
+						alert("最后一个不能删除");
+					}else{
+						obj.removeChild(obj.lastChild);
+						obj.removeChild(obj.lastChild);
+						obj.removeChild(obj.lastChild);
+					}
+				}
+			}
+		</script>
+	</head>
+	<body>
+		<div id="files"><input type="file"/><span>第1个文件</span><br/></div>
+		<input type="button" value="添加" id="bt_add"/>
+		<input type="button" value="删除" id="bt_del"/>
+	</body>
+</html>

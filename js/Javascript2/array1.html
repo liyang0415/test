@@ -1,0 +1,21 @@
+<html>
+	<head>
+		<title>关联数组定义和遍历</title>
+		<script language="javascript">
+			//  第一种定义和遍历
+			var arr = new Array();
+			arr['sname'] = 'tom';
+			arr['age'] = "40";
+			for(var i in arr)
+				alert(i+":"+arr[i]);
+
+			// 第二种定义和遍历
+			var arr1 = {sname:"tom",age:30,addr:"北京"};
+			for(var i in arr1)
+				alert(i+":"+arr1[i]);
+		</script>
+	</head>
+	<body>
+		
+	</body>
+</html>

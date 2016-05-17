@@ -1,0 +1,49 @@
+<!doctype>
+<html>
+	<head>
+		<title>节点类型判断</title>
+		<script language="javascript">
+			window.onload = function(){
+				var obj = document.getElementById("message");
+				var objs_tag = obj.childNodes;
+				var objs = new Array;
+				for(var i=0;i<objs_tag.length;i++){
+					if(objs_tag[i].nodeName == "INPUT" && objs_tag[i].getAttribute("type") == "checkbox")
+						objs[objs.length] = objs_tag[i];
+				}
+				
+				var sel_all = document.getElementById("sel_all");
+				var sel_no = document.getElementById("sel_no");
+				var sel_reverse = document.getElementById("sel_reverse");
+				sel_all.onclick = function(){
+					for(var j in objs)
+						objs[j].checked = true;
+				}
+				sel_no.onclick = function(){
+					for(var j in objs)
+						objs[j].checked = false;
+				}
+				sel_reverse.onclick = function(){
+					for(var j in objs)
+						if(objs[j].checked)
+							objs[j].checked = false;
+						else
+							objs[j].checked = true;
+				}
+			}
+		</script>
+	</head>
+	<body>
+		<div id="message">
+			<input type="checkbox" name="classes[]" value="0">语文<br/>
+			<input type="checkbox" name="classes[]" value="0">数学<br/>
+			<input type="checkbox" name="classes[]" value="0">英语<br/>
+			<input type="checkbox" name="classes[]" value="0">历史<br/>
+			<input type="checkbox" name="classes[]" value="0">政治<br/>
+			<input type="checkbox" name="classes[]" value="0">化学<br/>
+		</div>
+		<input type="button" name="sel_all" value="全选" id="sel_all">
+		<input type="button" name="sel_no" value="不选" id="sel_no">
+		<input type="button" name="sel_reverse" value="反选" id="sel_reverse">
+	</body>
+</html>

@@ -1,0 +1,37 @@
+<html>
+	<head>
+		<title>window对象</title>
+		<script language="javascript">
+			window.onload = function(){
+				var win_alert = document.getElementById("win_alert");
+				var win_confirm = document.getElementById("win_confirm");
+				var win_open = document.getElementById("win_open");
+				var win_close = document.getElementById("win_close");
+				var newwin = null;
+				win_alert.onclick = function(){
+					window.alert("这个是提示信息框");
+				}
+				win_confirm.onclick = function(){
+					if(window.confirm("点击确定了吗?"))
+						alert("确定了");
+					else
+						alert("取消了");
+				}
+				win_open.onclick = function(){
+					if(newwin) alert("窗口已经打开");
+					newwin = window.open("http://www.baidu.com","newbaidu");
+				}
+				win_close.onclick = function(){
+					if(!newwin.closed)
+						newwin.close();
+				}
+			}  // s
+		</script>
+	</head>
+	<body>
+		<input type="button" id="win_alert" value="提示框">
+		<input type="button" id="win_confirm" value="确认框">
+		<input type="button" id="win_open" value="打开新窗口">
+		<input type="button" id="win_close" value="关闭窗口">
+	</body>
+</html>

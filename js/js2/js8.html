@@ -1,0 +1,23 @@
+<html>
+	<head>
+		<title>DOM节点访问</title>
+		<script language="javascript">
+			window.onload = function(){
+			  var message = document.getElementById("message");
+			   var objs = message.firstChild.childNodes;
+			   alert(objs.length);
+			   for(var i=0;i<objs.length;i++)
+					objs[i].style.background="red";
+				// 将最后一个b标签也设置红色
+				message.lastChild.style.background="red";
+			}
+		</script>
+	</head>
+	<body>
+		<div id="message"><div><b>b你好啊</b><b>b你不好啊</b><b>b你不好啊</b></div>
+				<div>
+					别找到我
+				</div>
+				<b>我也不能被找到</b></div>
+	</body>
+</html>

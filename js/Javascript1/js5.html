@@ -1,0 +1,40 @@
+<html>
+	<head>
+		<title>if结构</title>
+		<script language="javascript">
+			var marks = 87;
+			var sums = "";
+			/*
+				if(marks >= 90)
+					sums = "A;
+				else if(marks >= 80)
+					sums = "B";
+				else if(marks >= 70)
+					sums = "C";
+				else if(marks >= 60)
+					sums = "D";
+				else
+					sums = "E";
+			*/
+			switch(true){
+				case marks >= 90:
+				     sums = "A";
+					 break;
+				case marks >= 80:
+					 sums = "B";
+					 break;
+				case marks >= 70:
+					 sums = "C";
+					 break;
+				case marks >= 60:
+					 sums = "D";
+					 break;
+				default:
+					 sums = "E";
+			}
+			alert(sums);
+		</script>
+	</head>
+	<body>
+	</body>
+</html>

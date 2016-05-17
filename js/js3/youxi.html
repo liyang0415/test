@@ -1,0 +1,60 @@
+<html>
+	<head>
+		<style type="text/css">
+			div{background:url(./images/tree.png) repeat-x;with:100%;height:80px;}
+			span{color:white;width:50px;height:50px;position:absolute;line-height:50px;font-size:30px;font-weight:bold;text-align:center;background:url(./images/apple.png);
+		</style>
+		<script language="javascript">
+			var nodes = new Array();
+			var t;
+			function create_n(){  // 创建一个苹果的原理
+				var obj = document.createElement("span");
+				var list = ['A','B','C','D','E','F','G','H','I','J','K','L','M','N','O','P','Q','R','S','T','U','V','W','X','Y','Z'];
+				var obj_text = document.createTextNode(list[Math.round(Math.random()*(list.length-1))]);
+				obj.appendChild(obj_text);
+				var t = 0;
+				var l = Math.round(Math.random()*1200);
+				nodes[nodes.length]={o:obj,text:obj_text,t:t,l:l};
+				obj.style.top=t;
+				//$a[count($a)]=array('pid'=>1001)
+				obj.style.left=l;
+				document.body.appendChild(obj);
+			}
+			function move_n(){
+				create_n();
+				for(var i in nodes){
+					height=nodes[i].t+10;
+					nodes[i].o.style.top=height;
+					nodes[i].t=height;
+				}
+				
+			}
+			function check(e){
+				if(window.event)
+					var s=e.keyCode;
+				if(e.which)
+					var s=e.keyCode;
+				var s = String.fromCharCode(s);
+				var tags = new Array();
+				for(var i=0;i<nodes.length;i++){
+					if(nodes[i]['text'].nodeValue == s){
+						document.body.removeChild(nodes[i]['o']);
+						continue
+					}
+					var len=tags.length;
+					tags[len]={o:nodes[i]['o'],text:nodes[i]['text'],t:nodes[i]['t'],l:nodes[i]['l']};
+				}
+				nodes=tags;
+			}
+			window.onload=function(){
+			   t = setInterval("move_n()",100);
+			}
+			//一关  二关   三关
+			//想办法一次只能消失一个相同的字符
+			//统计你的成绩  给出评级
+		</script>
+	</head>
+	<body onkeydown="check(event)">
+	      <div></div>
+	</body>
+</html>

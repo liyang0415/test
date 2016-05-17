@@ -1,0 +1,34 @@
+<!doctype>
+<html>
+	<head>
+		<title>数组-关联数组</title>
+		<script language="javascript">
+			 function getRandString(len){
+				var codes = ['A','B','C','D','E','F','G','H','I','J','K','L','M','N','O','P','Q','R','S','T','U','V','W','X','Y','Z','0','1','2','3','4','5','6','7','8','9'];
+				var string = "";
+				for(var i=0;i<len;i++){
+					var key = Math.round(Math.random()*35);
+					string += codes[key];
+				}
+				return string;
+			 }
+			 window.onload = function(){
+				var obj_yzm_info = document.getElementById("yzm_info");
+				var obj_yzm = document.getElementById("yzm");
+				obj_yzm_info.innerHTML = getRandString(4);
+				obj_yzm_info.onclick = function(){
+					this.innerHTML = getRandString(4);
+				}
+				obj_yzm.onchange = function(){
+					if(this.value.toLowerCase() == obj_yzm_info.innerHTML.toLowerCase() )  // toLowerCase 字符串转换成小写
+						alert("验证码正确");
+					else
+						alert("验证码错误");
+				}
+			 }
+		</script>
+	</head>
+	<body>
+		<input type="text" id="yzm"/><div style="width:70px;height:25px;font-size:20px;background:#aaaaaa;cursor:pointer;" id="yzm_info"></div>
+	</body>
+</html

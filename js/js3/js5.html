@@ -1,0 +1,39 @@
+<!doctype>
+<html>
+	<head>
+		<title>div隐藏和显示</title>
+		<style type="text/css">
+			.show{display:block;}
+			.hide{display:none;}
+			div{width:200px;height:200px;border:1px solid red;}
+			a{cursor:pointer;}
+		</style>
+		<script language="javascript">
+			function $(id){
+				return document.getElementById(id);
+			}
+			function change(obj){
+				var objs_tag = $("info").childNodes;
+				for(var i in objs_tag){
+					if(objs_tag[i].nodeType==1 && objs_tag[i].nodeName =="DIV"){
+						objs_tag[i].className = "hide";
+					}
+				}
+				var div_id = obj.getAttribute("name");
+				$(div_id).className = "show";
+			}
+		</script>
+	</head>
+	<body>
+	    <a onclick="change(this)" name="news">新闻</a> 
+		<a onclick="change(this)" name="products">产品</a> 
+		<a onclick="change(this)" name="notes">公告</a>
+		<a onclick="change(this)" name="member">用户</a>
+		<div id="info">
+			<div id="news" class="show">新闻列表</div>
+			<div id="products" class="hide">产品列表</div>
+			<div id="notes" class="hide">公告列表</div>
+			<div id="member" class="hide">用户列表</div>
+		</div>
+	</body>
+</html>

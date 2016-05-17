@@ -1,0 +1,31 @@
+<html>
+	<head>
+		<title>事件-单击事件</title>
+		<script language="javascript">
+			function changeimage(){
+				// 获得大图像的标签对象
+				var bigimage = document.getElementById("bigimage");
+				// arguments默认参数
+				var obj = arguments[0];  
+				// 如果第一个默认参数不在就默认为1.jpg
+				if(!obj)
+					var tmp_src = "./1.jpg";
+				else
+					var tmp_src = obj.src;
+				// 设置大图像src地址
+				bigimage.src = tmp_src;
+			}
+			// 页面加载的第一个事件 onload事件的调用函数
+			function loading(){
+				changeimage();
+			}
+		</script>
+	</head>
+	<body onload="loading()">
+		<img width="200px" height="200px" id="bigimage"/><br/>
+		<img width="50px" height="50px" src="./4.jpg" onclick="changeimage(this)"/>
+		<img width="50px" height="50px" src="./3.jpg" onclick="changeimage(this)"/>
+		<img width="50px" height="50px" src="./2.jpg" onclick="changeimage(this)"/>
+		<img width="50px" height="50px" src="./1.jpg" onclick="changeimage(this)"/>
+	</body>
+</html>

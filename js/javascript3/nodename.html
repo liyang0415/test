@@ -1,0 +1,32 @@
+<html>
+	<head>
+		<title>DOM节点判断</title>
+		<script language="javascript">
+		window.onload = function(){
+			var news = document.getElementById("news");
+			var objs = news.childNodes; // 直接子节点
+			for(var i in objs){
+				//alert(objs[i].nodeType);
+				if(objs[i].nodeType == 3){
+					alert(objs[i].nodeValue);
+					news.removeChild(objs[i]);
+					continue;
+				}
+				
+				if(objs[i].nodeType == 1)
+					objs[i].style.color = "blue"
+			}
+		}
+
+		</script>
+	</head>
+	<body>
+		<div id='news'><font>font1标签</font>
+			<b>b标签</b>
+			<font>font2标签</font>
+			<p>
+				<font>font3标签</font>
+			</p>
+		</div>
+	</body>
+</html>

@@ -1,0 +1,146 @@
+<!doctype>
+<html>
+	<head>
+		<title>frame1.html</title>
+		<style type="text/css">
+			body{background:#656565;}
+			table,td{background:#656565;}
+			td{width:46px;height:46px;}
+		</style>
+		<script>
+			var cat;
+			var positions = new Array();
+			function createmap(){
+				for(var i=0;i<9;i++){
+					for(var j=0;j<9;j++){
+						var obj = document.createElement("img");
+						obj.setAttribute("src","./images/empty.jpg");
+						document.body.appendChild(obj);
+						obj.style.position = "absolute";
+						if(i%2==0)
+							obj.style.left = 10+46*j;
+						else
+							obj.style.left = 33+46*j;
+						obj.style.top = 10+46*i;
+						var left = parseInt(obj.style.left);
+						var top = parseInt(obj.style.top);
+						positions[positions.length] = {o:obj,top:top,left:left}
+						obj.onclick = function(){
+							this.src="./images/ok.jpg";
+							move();
+						}
+					}
+				}
+			}
+			function createcat(){
+				cat = document.createElement("img");
+				cat.setAttribute("src","./images/happy.gif");
+				document.body.appendChild(cat);
+				cat.style.position = "absolute";
+				cat.style.width=46;
+				cat.style.height=46;
+				cat.style.left=194;
+				cat.style.top=194;
+			}
+			function move_lefttop(){
+				// 向左上
+				 if(parseInt(cat.style.left) <= 33 || parseInt(cat.style.top)<=10){
+					alert("跳出成功,你发神经了")
+					document.body.removeChild(cat);
+				 }else{
+					 for(var i in positions){
+						if(positions[i]['left'] == parseInt(cat.style.left)-46 && positions[i]['top'] == parseInt(cat.style.top))
+							if(positions[i]['o'].src=="http://www.96.com/js3/images/ok.jpg"){
+								 cat.style.left =parseInt(cat.style.left)-23;
+								 cat.style.top= parseInt(cat.style.top)-46;
+								 return true;
+							}else{
+								cat.style.left =parseInt(cat.style.left)-46;
+								cat.style.top= cat.style.top;
+								 return true;
+							}
+					 }
+				}
+			}
+			function move_leftbottom(){
+				// 左下
+				if(parseInt(cat.style.left) <= 33 || parseInt(cat.style.top) >=378){
+					alert("跳出成功,你发神经了")
+					document.body.removeChild(cat);
+				 }else{
+					 for(var i in positions){
+						if(positions[i]['left'] == parseInt(cat.style.left)-46 && positions[i]['top'] == parseInt(cat.style.top))
+							if(positions[i]['o'].src=="http://www.96.com/js3/images/ok.jpg"){
+								 cat.style.left =parseInt(cat.style.left)-23;
+								 cat.style.top= parseInt(cat.style.top)+46;
+								 return true;
+							}else{
+								 cat.style.left =parseInt(cat.style.left)-46;
+								cat.style.top= cat.style.top;
+								 return true;
+							}
+					 }
+					
+				}
+			}
+			function move_righttop(){
+				// 右上
+				if(parseInt(cat.style.left) >= 378 || parseInt(cat.style.top)<=10){
+					alert("跳出成功,你发神经了")
+					document.body.removeChild(cat);
+				 }else{
+					 for(var i in positions){
+						if(positions[i]['left'] == parseInt(cat.style.left)+46 && positions[i]['top'] == parseInt(cat.style.top))
+							if(positions[i]['o'].src=="http://www.96.com/js3/images/ok.jpg"){
+								 cat.style.left =parseInt(cat.style.left)+23;
+								 cat.style.top= parseInt(cat.style.top)-46;
+								 return true;
+							}else{
+								 cat.style.left =parseInt(cat.style.left)+46;
+								 cat.style.top= cat.style.top;
+								 return true;
+							}
+					 }
+					
+				}
+			}
+			function move_rightbottom(){
+				// 右下
+				if(parseInt(cat.style.left) >= 387 || parseInt(cat.style.top) >=378){
+					alert("跳出成功,你发神经了")
+					document.body.removeChild(cat);
+				 }else{
+					 for(var i in positions){
+						if(positions[i]['left'] == parseInt(cat.style.left)+46 && positions[i]['top'] == parseInt(cat.style.top))
+							if(positions[i]['o'].src=="http://www.96.com/js3/images/ok.jpg"){
+								 cat.style.left =parseInt(cat.style.left)+23;
+								 cat.style.top= parseInt(cat.style.top)+46;
+								 return true;
+							}else{
+								 cat.style.left =parseInt(cat.style.left)+46;
+								cat.style.top= cat.style.top;
+								 return true;
+							}
+					 }
+					
+				}
+			}
+			function move(){
+				var p = ["move_lefttop","move_leftbottom","move_righttop","move_rightbottom"]
+				var rand_index = Math.round(Math.random()*(p.length-1));
+				if(rand_index == 0)		move_lefttop();
+				else if(rand_index == 1)	move_leftbottom();
+				else if(rand_index == 2)	move_righttop();
+				else if(rand_index == 3) move_rightbottom();
+					
+			}
+			window.onload  = function(){
+				createmap();
+				createcat();
+			}
+		</script>
+	</head>
+	<body >
+		
+	<body>
+</html>

@@ -1,0 +1,36 @@
+<html>
+	<head>
+		<title>键盘事件</title>
+		<script language="javascript">
+			var obj;
+			 function get_code(e){
+				 obj = document.getElementById("pic");
+				// IE
+				if(window.event)
+					var keynum = e.keyCode;
+				// FF
+				if(e.which)
+					var keynum = e.which;
+			   if(keynum == 37){
+					obj.src="./images/left.jpg";
+					obj.style.left = parseInt(obj.style.left)-10;
+			   }
+			     if(keynum == 38){
+					obj.src="./images/top.jpg";
+					obj.style.top = parseInt(obj.style.top)-10;
+			   }
+			     if(keynum == 39){
+					obj.src="./images/right.jpg";
+					obj.style.left = parseInt(obj.style.left)+10;
+			   }
+			     if(keynum == 40){
+					obj.src="./images/bottom.jpg";
+					obj.style.top = parseInt(obj.style.top)+10;
+			   }
+			 } 
+		</script>
+	</head>
+	<body onkeydown = "get_code(event)">
+		<img src="./images/right.jpg" style="position:absolute;top:10px;left:10px;" id="pic">
+	</body>
+</html>

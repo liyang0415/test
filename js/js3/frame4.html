@@ -1,0 +1,25 @@
+<!doctype>
+<html>
+	<head>
+		<title>frame4.html</title>
+		<script language="javascript">
+			window.onload = function(){
+				var obj = document.getElementById("f4_bt_add");
+				obj.onclick = function(){
+					var f4_money = document.getElementById("f4_money");
+					var val = f4_money.value;
+					var string = "你成功充值了"+val;
+					alert(string);
+					parent.frame5.document.getElementById("info").innerHTML = string;
+
+					top.frame3.document.getElementById("moneys").innerHTML = parseFloat(top.frame3.document.getElementById("moneys").innerHTML)+parseFloat(val);
+				}
+			}
+			xhtml   html4.1
+		</script>
+	</head>
+	<body>
+	   充值:
+		<input type="text" id="f4_money"/><input type="button" value="充值" id="f4_bt_add">
+	</body>
+</html>

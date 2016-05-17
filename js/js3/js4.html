@@ -1,0 +1,74 @@
+<!doctype>
+<html>
+	<head>
+		<title>下拉列表框</title>
+		<style type="text/css">
+			select{width:200px;height:100px;}
+		</style>
+		<script language="javascript">
+			window.onload = function(){
+				var bt_rightall = document.getElementById("bt_rightall");
+				var bt_right = document.getElementById("bt_right");
+				var bt_leftall = document.getElementById("bt_leftall");
+				var bt_left = document.getElementById("bt_left");
+				var source = document.getElementById("source");
+				var orig = document.getElementById("orig");
+				var bt_add = document.getElementById("bt_add");
+				var new_text = document.getElementById("new_text");
+				bt_right.onclick = function(){
+					var index = source.selectedIndex;
+					var option =source.options[index];
+					orig.add(option);                            // 原内容会被删除
+				}
+				bt_left.onclick = function(){
+					var index = orig.selectedIndex;
+					var option =orig.options[index];
+					source.add(option);                            // 原内容会被删除
+				}
+				bt_rightall.onclick = function(){
+					var objs = source.options;
+					for(var i=objs.length-1;i>=0;i--){
+						orig.add(objs[i]);
+					}
+				}
+				bt_leftall.onclick = function(){
+					var objs = orig.options;
+					for(var i=objs.length-1;i>=0;i--){
+						source.add(objs[i]);
+					}
+				}
+				bt_add.onclick = function(){
+					var text = new_text.value;
+					var option = document.createElement("option");
+					option.text = text;
+					option.value = text;
+					source.add(option);
+				}
+
+			}
+		</script>
+	</head>
+	<body>
+	     <div style="float:left;">
+			<select id="source" multiple>
+				<option value="0">赵海</option>
+				<option value="1">张望海</option>
+				<option value="2">重庆文</option>
+				<option value="3">李海涛</option>
+				<option value="4">王强</option>
+			</select>
+		 </div>
+		  <div style="float:left;">
+				<input type="button" id="bt_rightall" value=" >> "><br/>
+				<input type="button" id="bt_right" value=" > "><br/>
+				<input type="button" id="bt_left" value=" < "><br/>
+				<input type="button" id="bt_leftall" value=" << ">
+		 </div>
+		  <div style="float:left;">
+			<select id="orig" multiple>
+			</select>
+		 </div>
+		 <div style="clear:both;"></div>
+		 <input type="text" id="new_text"><input type="button" id="bt_add" value="添加">
+	</body>
+</html>

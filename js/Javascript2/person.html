@@ -1,0 +1,36 @@
+<html>
+	<head>
+		<title>人行走</title>
+		<script language="javascript">
+		var obj = null;
+		var step = 1;
+		var t = null;
+		function person_go(){
+			if(step >= 10)
+				step = 1;
+			if(parseInt(obj.style.left) < 0 )
+				obj.style.left = "950px";
+			obj.src="./images/"+step+".png";
+			obj.style.left = parseInt(obj.style.left) - 5
+			step = step + 1;
+		}
+		window.onload = function(){
+			obj = document.getElementById("person");
+			start = document.getElementById("start");
+			end = document.getElementById("end");
+			start.onclick = function(){
+				clearInterval(t);
+				t = setInterval("person_go()",20);
+			}
+			end.onclick = function(){
+				clearInterval(t);
+			}
+		}
+		</script>
+	</head>
+	<body>
+		<img src="./images/1.png" style="position:absolute;top:0px;left:950px;" id="person">
+		<input type="button" id="start" value="开始">
+		<input type="button" id="end" value="停止">
+	</body>
+</html>

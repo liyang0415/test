@@ -1,0 +1,33 @@
+<html>
+	<head>
+		<title>循环结构</title>
+		<script language="javascript">
+			var i =0;
+			var n = 20;
+			var sums_even = 0;
+			var sums_odd = 0;
+			while(i <= n){
+				if(i % 2 == 0)
+					sums_even = sums_even + i;
+				else 
+					sums_odd  = sums_odd + i;
+				i = i+1;
+			}
+			alert("奇数和:"+sums_odd+"\n"+"偶数和:"+sums_even);
+			sums_even  = 0;
+			sums_odd = 0;
+			n = 20;
+			for(var i =0;i<=n;i++){
+				if(i % 2 == 0)
+					sums_even = sums_even + i;
+				else 
+					sums_odd  = sums_odd + i;
+				
+			}
+			alert("奇数和:"+sums_odd+"\n"+"偶数和:"+sums_even);
+		</script>
+	</head>
+	<body>
+		
+	</body>
+</html>

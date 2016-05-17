@@ -1,0 +1,39 @@
+<html>
+	<head>
+		<title>DOM创建</title>
+		<script language="javascript">
+		window.onload = function(){
+			var files = document.getElementById("files");
+			var add_file = document.getElementById("add_file");
+			var del_file = document.getElementById("del_file");
+			// 节点创建
+			add_file.onclick = function(){
+				var file_text = document.createTextNode("文件");
+				files.appendChild(file_text);
+				var file = document.createElement("input");
+				file.setAttribute("type","file");
+				file.setAttribute("name","mfile[]");
+				files.appendChild(file);
+				var br = document.createElement("br");
+				files.appendChild(br);
+			}
+			// 节点删除
+			del_file.onclick = function(){
+				alert(files.childNodes.length);
+				if(files.childNodes.length > 3){
+					files.removeChild(files.lastChild);
+					files.removeChild(files.lastChild);
+					files.removeChild(files.lastChild);
+				}else{
+					alert("最后一个file不可以删除");
+				}
+			}
+		}
+		</script>
+	</head>
+	<body>
+		<div id="files">文件:<input type="file" name="mfile[]"/><br/></div>
+		<input type="button" id="add_file" value="添加">
+		<input type="button" id="del_file" value="删除">
+	</body>
+</html>

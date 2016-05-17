@@ -1,0 +1,61 @@
+<html>
+	<head>
+		<title>函数使用</title>
+		
+	</head>
+	<body>
+		<p id="p_txt" style="background:#999999;" ></p>
+		<input type="text" id="username"/>
+		<script language="javascript">
+			// 参数定义
+				function show(a,b){
+					alert(a+b);
+				}
+				show(10,20);
+
+			// 设置默认参数 arguments[] => 获得默认值
+				function show1(){
+					alert(arguments[0]+":"+arguments[1]);
+				}
+				show(10,20);
+
+			// 函数的另外一种定义
+				var func = function(){
+					alert("匿名函数");
+				}
+				func();
+			
+			// 匿名函数直接执行
+				(function (){
+					alert("匿名函数直接运行");
+				})()
+			
+			// 函数作为参数-回调函数，如果封装的函数中某些代码需要后期具体的处理，那么可以使用这种方式
+			// 数学运算符
+			function show2(a,b,func){
+				var c = a+b;
+				func(c);
+			}
+			show2(10,20,function(tag){
+				// 自定义后期处理
+				//alert(tag);
+				document.getElementById("p_txt").innerHTML = tag;
+			});
+			show2(10,20,function(tag){
+				// 自定义后期处理
+				//alert(tag);
+				document.getElementById("username").value = tag;
+			});
+			/*
+			/*
+			 1、定义show2，show2并不运行，而只是将函数加载到内存中-在内存中声明了，有这个函数，但是这个函数并未运行;
+			 2、调用show2时，首先会将10，20分别传递给a,b
+			 ，然后将第三参数的函数体，传递给func,但是func这个时候并未执行;
+                相当于  var func = function(tag){alert(tag)};
+			 3、在show2中对函数体func进行调用，这个时候回到函数才执行;
+
+
+			*/
+		</script>
+	</body>
+</html>

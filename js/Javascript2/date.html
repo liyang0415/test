@@ -1,0 +1,35 @@
+<html>
+	<head>
+		<title>日期时间</title>
+		<script language="javascript">
+		var clock = null;
+		var t  = null;
+		// 设置小于10的数字加上0变成01,02
+		function check(n){
+			if(n<10)
+				return "0"+n;
+			else
+				return n;
+		}
+		// 得到当前的小时，分钟，毫秒数
+		function getclock(){
+			var time = new Date;
+			var h = time.getHours();
+			var m = time.getMinutes();
+			var s = time.getSeconds();
+
+			h = check(h);
+			m = check(m);
+			s = check(s);
+			clock.innerHTML = h+":"+m+":"+s;
+		}
+		window.onload = function(){
+			clock = document.getElementById("clock");
+			t = setInterval("getclock()",1000);
+		}
+		</script>
+	</head>
+	<body>
+		<div id="clock" style="font-size:200px;"></div>
+	</body>
+</html>

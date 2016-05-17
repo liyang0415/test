@@ -1,0 +1,27 @@
+<html>
+	<head>
+		<title>事件-单击事件</title>
+		<script language="javascript">
+			// 页面加载的第一个事件 onload事件的调用函数
+			window.onload=function(){
+				// 获取页面中所有的img标签对象
+				var objs = document.getElementsByTagName("img");
+				// 获得大图像的标签对象
+				var bigimage = document.getElementById("bigimage");
+				for(var i=0;i < 5;i++){
+					// 动态的为标签设置事件操作
+					objs[i].onclick = function(){
+						bigimage.src = this.src;
+					}
+				}
+			}
+		</script>
+	</head>
+	<body>
+		<img width="200px" height="200px" id="bigimage"/><br/>
+		<img width="50px" height="50px" src="./4.jpg"/>
+		<img width="50px" height="50px" src="./3.jpg"/>
+		<img width="50px" height="50px" src="./2.jpg"/>
+		<img width="50px" height="50px" src="./1.jpg"/>
+	</body>
+</html>

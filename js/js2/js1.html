@@ -1,0 +1,39 @@
+<!doctype>
+<html>
+	<head>
+		<title>动画图片的自动切换</title>
+		<script language="javascript">
+			var t = "";
+			function changeImage(i){
+				var obj = document.getElementById("bigimgage");
+				var imgsrc="";
+				switch(i){
+					case 1:
+						imgsrc="./images/1.jpg";break;
+					case 2:
+					   imgsrc="./images/2.jpg";break;
+					case 3:
+					   imgsrc="./images/3.jpg";break;
+					case 4:
+					   imgsrc="./images/4.jpg";break;
+					default:
+					  imgsrc = "./images/1.jpg";
+				}
+				i = i+1;
+				if(i>4) i=1;
+				obj.src = imgsrc;
+				t = setTimeout("changeImage("+i+")",3000);
+			}
+			window.onload = function(){   //onload: 页面加载完毕后第一个执行的事件
+				changeImage(0);
+			}
+		</script>
+	</head>
+	<body>
+		<img src="./images/1.jpg" width="400px" height="400px" id='bigimgage'/><br/>
+		<img src="./images/1.jpg" width="100px" height="100px"  onclick="changeImage(1)"/>
+		<img src="./images/2.jpg" width="100px" height="100px" onclick="changeImage(2)"/>
+		<img src="./images/3.jpg" width="100px" height="100px" onclick="changeImage(3)"/>
+		<img src="./images/4.jpg" width="100px" height="100px" onclick="changeImage(4)"/>
+	</body>
+</html>

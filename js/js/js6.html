@@ -1,0 +1,26 @@
+<!doctype>
+<html>
+	<head>
+		<title>事件</title>
+	</head>
+	<body>
+		密码:<input type="password" id="pwd"  style="color:#aaaaaa;"><br/>
+		确认密码:<input type="password" id="pwd_con"  style="color:#aaaaaa;"><span id="info"></span>
+		<script language="javascript">
+			// 对象.innerHTML  获得和设置某个标签中的html代码内容
+			var obj_pwd = document.getElementById("pwd");
+			var obj_pwd_con = document.getElementById("pwd_con");
+			var obj_info = document.getElementById("info");
+		    obj_pwd_con.onchange = function(){
+				if(obj_pwd.value == obj_pwd_con.value){
+					obj_info.style.color="green";
+					obj_info.innerHTML = "ok";
+				}else{
+					obj_info.style.color="red";
+					obj_info.innerHTML = "error";
+				}
+			}
+			// js动画事件  js中5大数据类型对象  DOM操作
+		</script>
+	</body>
+</html>

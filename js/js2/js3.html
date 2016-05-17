@@ -1,0 +1,36 @@
+<!doctype>
+<html>
+	<head>
+		<title>动画网上在线时钟</title>
+		<script language="javascript">
+			var i = 0;
+			var t="";
+		    function works(){
+				var obj = document.getElementById("person");
+				i=i+1;
+				if(i>9) i = 1;
+				obj.src="./images/"+i+".png";
+				step = -10
+				if(parseInt(obj.style.left)<=0) step = 1200;  // parseInt()  parseString  将数据类型转换  
+				obj.style.left = parseInt(obj.style.left) +step;
+			}
+			 window.onload = function(){
+				var bt_start = document.getElementById("bt_start");
+				var bt_close = document.getElementById("bt_close");
+				bt_start.onclick = function(){
+					 t = setInterval("works()",50);
+				}
+				bt_close.onclick = function(){
+					clearInterval(t);
+				}
+				
+			 }
+		</script>
+	</head>
+	<body>
+		<input type="button" value="开始" id="bt_start"/>
+		<input type="button" value="停止" id="bt_close"/>
+		<img src="./images/1.png" style="position:absolute;left:1200px;top:50px;" id="person"/>
+		
+	</body>
+</html

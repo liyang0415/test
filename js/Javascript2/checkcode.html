@@ -1,0 +1,48 @@
+<html>
+	<head>
+		<title>js验证码</title>
+		<script language="javascript">
+			// 封装一个能得到随机验证码的函数
+			function getcodes(len){
+				var chars = ['A','B','C','D','E','F','G','H','I','J','K','L','M','N','O','P','Q','R','S','T','U','V','W','X','Y','Z','0','1','2','3','4','5','6','7','8','9'];
+				var str = "";
+				// 得到随机的几个字符
+				for(var i=0;i<len;i++){
+					var tmp = Math.round(Math.random()*(chars.length-1));
+					str += chars[tmp];
+				}
+				// 得到的随机字符返回
+				return str;
+			}
+			window.onload = function(){
+				// 得到页面中有用的对象
+				var code_value = document.getElementById("code_value");
+				// 显示验证码的对象
+				var codes = document.getElementById("codes");
+				// 显示验证码验证信息的对象
+				var code_info = document.getElementById("code_info");
+				// 页面加载时，给验证码codes标签一个默认验证码
+				codes.innerHTML = getcodes(4);
+				// 文本框内容改变，失去光标后，判断验证码和文本框数据是否相等
+				code_value.onchange = function(){
+					if(this.value == codes.innerHTML){
+						code_info.innerHTML = "√";
+						code_info.style.color = "green";
+					}else{
+						code_info.innerHTML = "×";
+						code_info.style.color = "red";
+					}
+				}
+				// 点击验证码标签，刷新验证码-看不清楚，“刷一下”
+				codes.onclick = function(){
+					this.innerHTML = getcodes(4);
+				}
+			}
+		</script>
+	</head>
+	<body>
+		<input type="text" id="code_value">
+		<span id="codes"></span>
+		<span id="code_info"></span>
+	</body>
+</html>

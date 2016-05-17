@@ -1,0 +1,35 @@
+<!doctype>
+<html>
+	<head>
+		<title>函数</title>
+		<script language="javascript">
+			  function test(a){   // arguments 下标从0开始 使用arguments[下标] 实现参数中的默认参数
+				 alert("参数"+arguments[0]);
+					if(arguments[2]){
+						return a+arguments[1]+arguments[2];
+					}else if(arguments[1]){
+						return a+arguments[1];
+					}else{
+						return a;
+					}
+			  }
+			  alert(test(1));
+			  alert(test(1,2));
+			  alert(test(1,2,3));
+              // 匿名函数:  
+			// function(){}
+			(function(a,b){
+				alert("我是匿名函数");
+				alert(a+"="+b);
+			})(100,200)
+
+			var test = function(){
+				alert("我是test");
+			}
+			test();
+
+		</script>
+	</head>
+	<body>
+	</body>
+</html>

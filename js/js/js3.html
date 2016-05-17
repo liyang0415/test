@@ -1,0 +1,75 @@
+<!doctype>
+<html>
+	<head>
+		<title>while循环</title>
+		<style type="text/css">
+			.bg{background:#eeeeee;}
+			.bg_black{background:#cccccc;}
+			.bg_b{background:#666666;}
+		</style>
+	</head>
+	<body>
+		<table>
+			<tr>
+				<td>Tom</td><td>29</td><td>山东大学</td><td>济南</td><td>89</td><td>96</td>
+			</tr>
+			<tr>
+				<td>Tom</td><td>29</td><td>山东大学</td><td>济南</td><td>89</td><td>96</td>
+			</tr>
+			<tr>
+				<td>Tom</td><td>29</td><td>山东大学</td><td>济南</td><td>89</td><td>96</td>
+			</tr>
+			<tr>
+				<td>Tom</td><td>29</td><td>山东大学</td><td>济南</td><td>89</td><td>96</td>
+			</tr>
+			<tr>
+				<td>Tom</td><td>29</td><td>山东大学</td><td>济南</td><td>89</td><td>96</td>
+			</tr>
+			<tr>
+				<td>Tom</td><td>29</td><td>山东大学</td><td>济南</td><td>89</td><td>96</td>
+			</tr>
+			<tr>
+				<td>Tom</td><td>29</td><td>山东大学</td><td>济南</td><td>89</td><td>96</td>
+			</tr>
+			<tr>
+				<td>Tom</td><td>29</td><td>山东大学</td><td>济南</td><td>89</td><td>96</td>
+			</tr>
+			<tr>
+				<td>Tom</td><td>29</td><td>山东大学</td><td>济南</td><td>89</td><td>96</td>
+			</tr>
+			<tr>
+				<td>Tom</td><td>29</td><td>山东大学</td><td>济南</td><td>89</td><td>96</td>
+			</tr>
+			<tr>
+				<td>Tom</td><td>29</td><td>山东大学</td><td>济南</td><td>89</td><td>96</td>
+			</tr>
+		</table>
+		<script language="javascript">
+			/*var objs = document.getElementsByTagName("tr");
+			var i =0;
+			while(i<objs.length){   // 数组.length   返回数组的数组元素个数
+				if(i%2 == 0)
+					objs[i].className = "bg";  // 对象.className   给某个对象设置class样式
+				else
+					objs[i].className = "bg_black";
+				i = i+1;
+			}*/
+			var objs = document.getElementsByTagName("tr");
+			var tag = "";
+			for(var i =0;i<objs.length;i++)
+			{  
+				if(i%2 == 0)
+					objs[i].className = "bg";  // 对象.className   给某个对象设置class样式
+				else
+					objs[i].className = "bg_black";
+				objs[i].onmouseover = function(){
+					tag = this.className;   // 获取tr样式
+					this.className = "bg_b";
+				}
+				objs[i].onmouseout = function(){
+					this.className = tag;
+				}
+			}
+		</script>
+	</body>
+</html>

@@ -1,0 +1,21 @@
+<!doctype>
+<html>
+	<head>
+		<title>for循环图片切换</title>
+		<script language="javascript">
+		   function check(){
+			 var obj = document.getElementById("user");
+			 if(obj.value == "")
+				return false;
+			else
+				return true;
+		   }
+		</script>
+	</head>
+	<body>
+		<form action="index.php" method="GET" onsubmit="return check()">
+			<input type="text" name="user" id="user">
+			<input type="submit" name="save" value="保存" id="save">
+		</form>
+	</body>
+</html>

@@ -1,0 +1,33 @@
+<html>
+	<head>
+		<title>键盘事件</title>
+		<script language="javascript">
+		// event对象是捕获事件信息的
+		function change(e){
+			if(window.event) var keynums = e.keyCode;
+			if(e.which) var keynums = e.which;
+			var c = String.fromCharCode(keynums);
+			var obj = document.getElementById('tk');
+			if(c=="W"){
+				obj.src="./images/top.jpg";
+				obj.style.top = parseInt(obj.style.top) -10
+			}
+			if(c=="S"){
+				obj.src="./images/bottom.jpg";
+				obj.style.top = parseInt(obj.style.top) +10
+			}
+			if(c=="A"){
+				obj.src="./images/left.jpg";
+				obj.style.left = parseInt(obj.style.left) -10
+			}
+			if(c=="D"){
+				obj.src="./images/right.jpg";
+				obj.style.left = parseInt(obj.style.left) +10
+			}
+		}
+		</script>
+	</head>
+	<body onkeydown="change(event)">
+		<img src="./images/right.jpg" id='tk' style="position:absolute;top:0px;left:0px;">
+	</body>
+</html>

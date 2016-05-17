@@ -1,0 +1,13 @@
+<html>
+	<head>
+		<title>人行走</title>
+		<script language="javascript">
+		window.onload = function(){
+			var obj = document.getElementById("user");
+			obj.firstChild.nextSibling.style.color="red";
+			obj.lastChild.style.color="red";
+			obj.parentNode.lastChild.firstChild.style.color="red";
+		}
+		</script>
+	</head>
+	<body><div id="user"><div>div标签</div><b>b标签</b><font>font标签</font></div><font>font标签</font><div><font>font标签</font></div></body></html>

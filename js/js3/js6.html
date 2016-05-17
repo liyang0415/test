@@ -1,0 +1,69 @@
+<html>
+	<head>
+		<script language="javascript">
+			window.onload = function(){
+				left_one.onclick = function(){
+					var index = source.selectedIndex;
+					var obj_option = source.options[index];
+					dest.add(obj_option);
+				}
+				left_all.onclick = function(){
+					var objs = source.options;
+					for(var i=objs.length-1;i>=0;i--){
+						dest.add(objs[i]);
+					}
+				}
+				right_one.onclick = function(){
+					var index = dest.selectedIndex;
+					var obj_option = dest.options[index];
+					source.add(obj_option);
+				}
+				right_all.onclick = function(){
+					var objs = dest.options;
+					for(var i=dest.length-1;i>=0;i--){
+						source.add(objs[i]);
+					}
+				}
+				add_new.onclick = function(){
+					var objs = source.options;
+					for(var i in objs){
+						if(objs[i].text == new_list.value){
+							alert("不能插入重复内容");
+							return false;
+						}
+					}
+					var option = document.createElement("option");
+					option.value = source.options.length;
+					option.text = new_list.value;
+					source.add(option);
+				}
+			}
+		</script>
+		<style type="text/css">
+			select{width:200px;height:200px;}
+		</style>
+	</head>
+	<body>
+		<div style="float:left">
+			<select multiple id="source">
+				<option value="1">语文</option>
+				<option value="2">数学</option>
+				<option value="3">英语</option>
+				<option value="4">历史</option>
+				<option value="5">政治</option>
+			</select>
+		</div>
+		<div style="float:left">
+			<input type="button" id="left_all" value=" >> "><br/>
+			<input type="button" id="left_one" value=" > "><br/>
+			<input type="button" id="right_one" value=" < "><br/>
+			<input type="button" id="right_all" value=" << "><br/>
+		</div>
+		<div style="float:left">
+			<select multiple id="dest">
+			</select>
+		</div>
+		<div style="clear:both"></div>
+		<input type="text" id="new_list"><input type="button" id="add_new" value="添加"/>
+	</body>
+</html>

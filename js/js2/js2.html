@@ -1,0 +1,35 @@
+<!doctype>
+<html>
+	<head>
+		<title>动画网上在线时钟</title>
+		<script language="javascript">
+		     function check(i){
+				if(i<10)
+					return "0"+i;
+				else
+					return i;
+			 }
+			 function get_time(){
+				var d = new Date;
+				var hour = d.getHours();
+				var minutes = d.getMinutes();
+				var seconds = d.getSeconds();
+
+				var hour = check(hour);
+				var minutes = check(minutes);
+				var seconds = check(seconds);
+
+				var str = hour+":"+minutes+":"+seconds;
+				var clock = document.getElementById("clock");
+				clock.innerHTML = str;
+			 }
+			 var t="";
+			 window.onload = function(){
+				t = setInterval("get_time()",1000);
+			 }
+		</script>
+	</head>
+	<body>
+		<div id="clock" style="width:150px;height:40px;font-size:35px;background:#dddddd;"></div>
+	</body>
+</html
