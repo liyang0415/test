@@ -1,4 +1,4 @@
-http://emojifair.pixelnfinite.com/   表情集市
+﻿http://emojifair.pixelnfinite.com/   表情集市
 http://pengbotao.cn/codeigniter-config-other.html    CI配置
 http://www.cnblogs.com/yin-jingyu/archive/2011/08/01/2123548.html     HTTP深入浅出 http请求
 http://cn.vuejs.org/guide/            vue.js
@@ -16,7 +16,7 @@ http://blog.csdn.net/yipiankongbai/article/details/17404247    句柄和指针
 http://www.cnblogs.com/liyanwei/p/d54a030eade4b6e78831ba6ca453c273.html   学习
 http://11.zhuanti.ithao123.cn/            laravel学习
 http://www.cnblogs.com/xiaowei0705/archive/2011/04/19/2021372.html    本地存储  localStorage和sessionStorage
-
+http://blog.csdn.net/xiaoweige207/article/details/6211577/         socket通信简介
 
 
 
