@@ -1,0 +1,45 @@
+数据库的导入导出
+直接打开CMD 输入
+1、数据库备份
+        mysqldump -u root -p com66nao_mi  >d:\comm66nao_mi.sql     导出数据库到d  命名为comm66nao_mi.sql
+        mysqldump -u root -p com66nao_mi mi_orgs  >d:\comm66nao_mi_mi_orgs.sql     导出数据库com66nao_mi中的表mi_orgs到d  命名为comm66nao_mi_mi_orgs.sql
+2、数据库还原
+
+        进入mysql>_     1)use 数据库名 2)source d:\comm66nao_mi_mi_orgs.sql   导入sql文件到指定数据库中
+        ((((((或者还原数据库mysql -u root -p ab < d:\comm66nao_mi.sql    不能还原数据库表))))))
+表的复制
+    a\从另一个数据库comm66nao_mi复制到comm66nao_88数据库中
+        1、要先建立链接mysql -hlocalhost -u用户名 -p密码
+        2、进入mysql>_
+        3、链接数据库use comm66nao_88;
+        4、输入 create table 表名 select * from com66nao_mi.表名;
+    b\本数据库中
+    create table new_table like old_table;
+
+数据的复制
+    insert new_table select * form old_table;
+
+
+如果表的迁移  用游标可参考
+存储过程把stu_info 里面所有的数据  转移到 A表中
+            create procedure move_data()
+            begin
+                declare tag int(1) default 0;
+                declare a int(11) default 0;
+                declare b varchar(200) default "";
+                declare c int(3) default 0;
+                declare d varchar(200) default "";
+                declare allData cursor for select id,sname,age,addr from stu_info;
+                declare continue handler for sqlstate '02000' set tag = 1;
+                open allData;
+                    while tag = 0 do
+                        fetch allData into a,b,c,d;
+                        if tag = 0 then
+                            insert into a values(a,b,c,d);
+                        end if;
+                    end while;
+                close allData;
+            end
+
+
+            call move_data();
