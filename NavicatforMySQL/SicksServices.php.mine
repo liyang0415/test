@@ -1,0 +1,622 @@
+<?php if ( ! defined('BASEPATH')) exit('No direct script access allowed');
+
+class SicksServices extends BaseServices 
+{
+    static $SickLevelNone=0;
+    static $SickLevelLow=1;
+    static $SickLevelMiddle=5;
+    static $SickLevelHigh=9;
+
+    function getSicksGroup()
+    {
+        $arr=array(
+            '典型病症'=>array('type'=>'radio','sicks'=>array('AD','VD','DD','NOTABOVE')),
+            '更多病症'=>array('type'=>'checkbox','sicks'=>array('STR','EPI','PD','NMO','DEP','AUT','HYP','DIA','HD','NEP','DYS','BC')),
+            '其它病症'=>array('type'=>'text','sicks'=>array('OTH')),
+        );
+        return $arr;
+    }
+
+    function getAllSicks()
+    {
+        $arr=array(
+            'AD'=>array('name'=>'阿尔茨海默病','type'=>'radio'),
+            'VD'=>array('name'=>'血管性认知障碍','type'=>'radio'),
+            'DD'=>array('name'=>'退行性障碍','type'=>'radio'),
+            'NOTABOVE'=>array('name'=>'以上都不是','type'=>'radio','notscalesick'=>1),
+
+            'STR'=>array('name'=>'中风'),
+            'EPI'=>array('name'=>'癫痫'),
+            'PD'=>array('name'=>'帕金森'),
+            'NMO'=>array('name'=>'多发性动脉硬化'),
+            'DEP'=>array('name'=>'抑郁症'),
+            'AUT'=>array('name'=>'孤独症/自闭症'),
+            'HYP'=>array('name'=>'高血压'),
+            'DIA'=>array('name'=>'糖尿病'),
+            'HD'=>array('name'=>'心脏病'),
+            'NEP'=>array('name'=>'肾病'),
+            'DYS'=>array('name'=>'睡眠障碍'),
+            'BC'=>array('name'=>'脑肿瘤'),
+            'OTH'=>array('name'=>'其他疾病','type'=>'text','notscalesick'=>1),
+            );
+        foreach ($arr as $key => &$value) {
+            if (!isset($value['type'])) {
+                $value['type']='checkbox';
+            }
+        }
+        unset($value);
+        return $arr;
+    }
+
+    function getSicksName($sicks)
+    {
+        $allsicks=self::getAllSicks();
+        $arr=array();
+        foreach ($allsicks as $key => $value) {
+            if (isset($sicks[$key]) && $key!=='NOTABOVE') {
+                $arr[$key]=$value['name'];
+            }
+        }
+        return $arr;
+    }
+
+    function formateSicksName($item_diag)
+    {
+        $item_diag['sicks']=array();
+        if ($item_diag && $item_diag['user_anamnesis']) {
+            $item_diag['sicks']=self::getSicksName($item_diag['user_anamnesis']);
+
+            $sicks=self::getAllSicks();
+            foreach ($item_diag['user_anamnesis'] as $key => $value) {
+                if (isset($sicks[$key]['options'])) {
+                    $item_diag['sicks'][$key]=$sicks[$key]['options'][$value].$item_diag['sicks'][$key];
+                }
+                if ($key=='AS' && isset($item_diag['sicks'][$key])) {
+                    $item_diag['sicks'][$key]=$sicks[$key]['name'].':'.$value;
+                }
+                if ($key=='OTH' && $item_diag['sicks'][$key]) {
+                    $item_diag['sicks'][$key]=$sicks[$key]['name'].':'.$value;
+                }
+            }
+            if (isset($item_diag['user_anamnesis']['NOTABOVE'])) {
+                $item_diag['sicks']['NOTABOVE']='非典型病症';
+            }
+        }
+        return $item_diag;
+    }
+
+    function getSickEle($sicks=array())
+    {
+
+    }
+    
+    /**
+    * 获取系统疾病
+    * @date: 2015年10月22日
+    * @author: 段正强
+    * @return:array
+    */
+    function getsicks66nao()
+    {  
+        $result=array();
+        $list=Sicks66naoModel::getInstance()->getList();
+        foreach ($list as $key=>$value ){
+           if($value['sick_parent']==''){
+               $value['parent']='';
+           }else{
+               //todo: 获取疾病信息用uuid
+               $getone=Sicks66naoModel::getInstance()->getOne(array('where'=>array('id'=>$value['sick_parent'])));
+               $value['parent']=$getone['sick_name'];
+           }
+           $result[]=$value;
+       }
+       return $result;
+    }
+    /**
+     * [getsick_nameinfo 判断system疾病是否存在  一条]
+     * @param  [type] $ar [description]
+     * @return [type]     [description]
+     */
+    function getsick_nameinfo($ar)
+    {
+        $result=Sicks66naoModel::getInstance()->getOne(array('where'=>array('sick_name'=>$ar)));
+        //print_r($result);die;
+        if($result){
+            return $result;
+        }else{return false;}
+    }
+    /**
+     * [getsick_nameinfo 判断机构疾病是否存在  一条]
+     * @param  [type] $ar [description]
+     * @return [type]     [description]
+     */
+    function getmanager_nameinfo($ar)
+    {
+        $result=SicksExModel::getInstance()->getOne(array('where'=>array('sick_name'=>$ar)));
+        //print_r($result);die;
+        if($result){
+            return $result;
+        }else{return false;}
+    }
+  /**
+     * 获取一条系统疾病
+     * $array=array('where'=>array('id'=>$id)),$id是系统疾病id
+     * @date: 2015年10月28日
+     * @author: 段正强
+     * @return:array
+     */
+    function getonesicks66nao($array)
+    {
+        $result=Sicks66naoModel::getInstance()->getOne($array);
+        if($result['sick_parent']==''){
+            $result['parent']='';
+        }else{
+            $getone=Sicks66naoModel::getInstance()->getOne(array('where'=>array('id'=>$result['sick_parent'])));
+            $result['parent']=$getone['sick_name'];
+        }
+        return $result;
+    }
+    /**
+     * 
+     *@date: 2015/10/26
+     * @author: 李杨
+     * [getonesickpara66nao description]
+     * @param  [type] $sid [疾病id]
+     * @return [type]      [description]
+     */
+    function getonesickpara66nao($sid)
+    {   
+        $result=Sickpara66naoModel::getInstance()->getList(array('where'=>array('sick_id'=>$sid)));
+        return $result;
+    }
+    /**
+     * 疾病添加
+     *@date: 2015/10/26
+     * @author: 李杨
+     * [addsickssystem description]
+     * @param  array  $arg [description]
+     * @param  array  $op  [description]
+     * @return [type]      [description]
+     */
+    
+    /**
+     * 获取机构疾病
+     * $org_id是机构id
+     * @date: 2015年10月22日
+     * @author: 段正强
+     * @return:array
+     */
+    function getsicksEx($org_id)
+    {
+        $result=array();
+        $list=SicksExModel::getInstance()->getList(array('where'=>array('org_id'=>$org_id)));
+        foreach ($list as $key=>$value ){
+            if($value['sick_parent']==''){
+                $value['parent']='';
+            }else{
+                //todo: $list已包含机构所有疾病
+                $getone=SicksExModel::getInstance()->getOne(array('where'=>array('id'=>$value['sick_parent'],'org_id'=>$org_id)));
+                $value['parent']=$getone['sick_name'];
+            }
+            $result[]=$value;
+        }
+        return $result;
+    }
+    function getonesicksEx($array)
+    {
+        $result=SicksExModel::getInstance()->getOne($array);
+        if($result['sick_parent']==''){
+            $result['parent']='';
+        }else{
+            $getone=SicksExModel::getInstance()->getOne(array('where'=>array('id'=>$result['sick_parent'])));
+            $result['parent']=$getone['sick_name'];
+        }
+        return $result;
+    }
+    function getallmanager_sickparent($sid){
+        $result=SicksExModel::getInstance()->getList(array('where'=>array('sick_parent'=>$sid)));
+        return $result;
+    }
+    function getallsystem_sickparent($sid){
+        $result=Sicks66naoModel::getInstance()->getList(array('where'=>array('sick_parent'=>$sid)));
+        return $result;
+    }
+    /**
+     * 
+     *@date: 2015/10/26
+     * @author: 李杨
+     * [getonesickpara66nao description]
+     * @param  [type] $sid [疾病id]
+     * @return [type]      [description]
+     */
+    function getonesickparaEx($sid)
+    {   
+        $result=SicksParaExModel::getInstance()->getList(array('where'=>array('sick_id'=>$sid)));
+        return $result;
+    }
+    /**
+     * 机构添加疾病
+     * @param  array  $arg [description]
+     * @param  array  $op  [description]
+     * @return [type]      [description]
+     */
+    function addsicksmanage($arg = array(),$op=array()){
+        $arg['org_id']=$op['org_id'];
+        $arg['op_id'] = isset($op['id'])?$op['id']:0;
+            if($arg['sick_conflict']){
+                $arg['sick_conflict']=(count($arg['sick_conflict'])<1)?array():$arg['sick_conflict'];
+            foreach($arg['sick_conflict'] as $v){
+                $getsickinfo[]=SicksServices::getonesicks66nao(array('where'=>array('id'=>$v)));
+            }
+            foreach($getsickinfo as $k){
+                $arr[]=array(
+                $k['id']=>array($k['id'],$k['uuid']));
+            }
+            $arr=json_encode($arr);
+            $arg['sick_conflict']=$arr;
+            }
+            
+        $results = SicksExModel::getInstance()->add($arg);
+        return $results;
+
+    }
+    function addsick_paramanage($arg = array()){
+        //$arg['sick_para']=json_encode($arg['sick_para']);
+        $result = SicksParaExModel::getInstance()->add($arg);
+        return $result;
+
+    }
+    /**
+     * 疾病编辑
+     * [editsicksystem description]
+     * @param  [type] $sid  [当前id]
+     * @param  [type] $data [name值]
+     * @param  [type] $op   [操作id]
+     * @return [type]       [description]
+     */
+    function editsicksmanager($sid,$data,$op){
+        if (!$data) {
+            return false;
+        }
+        $data['op_id']=isset($op['id'])?$op['id']:0;
+        //echo $sid;
+        //print_r($data);die;
+        $result=SicksExModel::getInstance()->update($data,array('id'=>$sid));
+        //print_r($result);die;
+        return $result;
+
+    }
+    /**
+     * 编辑疾病对应的范式
+     * [editsick_parasystem description]
+     * @param  [type] $sid  [description]
+     * @param  [type] $data [description]
+     * @return [type]       [description]
+     */
+    function editsick_paramanager($sid,$data){
+        if (!$data) {
+            return false;
+        }
+        $result = SicksParaExModel::getInstance()->update($data,array('sick_id'=>$sid));
+        return $result;
+    }
+
+    function delsick_paramanage($sid){
+        $result = SicksParaExModel::getInstance()->delete(array(
+        'sick_id' => $sid));
+    }
+
+    /**
+     * 获取机构和系统疾病
+     * $org_id是机构id
+     * @date: 2015年10月23日
+     * @author: 段正强
+     * @return:array
+     */
+    function getsicksex66nao($org_id)
+    {
+        $result=array();
+        $k=array();
+        //todo: 获取机构和系统疾病能否使用上面的方法，一个功能用一个代码
+        $listex=SicksExModel::getInstance()->getList(array('where'=>array('org_id'=>$org_id)));
+        $list=Sicks66naoModel::getInstance()->getList();
+        foreach ($list as $key=>$value ){
+            foreach($listex as $ke=>$val){
+
+                if(($value['sick_name']==$val['sick_name'])||($value['sick_icd']==$val['sick_icd'])){
+                    $k[]=$key;
+                }
+            }
+        }
+        //todo: 删除元素？可用unset($array($key))
+        foreach ($k as $kk=>$kv){
+            array_splice( $list, $kv,1);
+        }
+        
+       //使用services要使用::getInstance()
+       $res=SicksServices::getsicksEx($org_id);
+       foreach ($res as $reskey=>$resvalue){
+           $result[]=$resvalue;
+       }
+       foreach ($list as $key=>$value ){
+           $value['org_id']='0';
+           if($value['sick_parent']==''){
+               $value['parent']='';
+           }else{
+               //todo: $list已包含所有系统疾病，能否不再查询数据库直接在$list中查找？
+               $getone=Sicks66naoModel::getInstance()->getOne(array('where'=>array('id'=>$value['sick_parent'])));
+               $value['parent']=$getone['sick_name'];
+           }
+           $result[]=$value;
+       }
+        return $result;
+    }
+    
+    
+//     /**
+//     * 获取患者必选范式
+//     * @date: 2015年10月23日
+//     * @author: 段正强
+//     * @return:
+//     */
+//     function usersickpara($userid)
+//     {           
+//         $result=array();
+//         $uuid=array();
+//         $list=UserSicksModel::getInstance()->getList(array('where'=>array('user_id'=>$userid)));
+//         $re=Sicks66naoModel::getInstance()->getList();
+//         foreach($re as $key=>$value){
+//            $uuid[]=$value['uuid'];
+//         }
+//         foreach ($list as $ke=>$val){
+//             if(in_array($val['sick_uuid'], $uuid)){
+//                $sicknao=Sicks66naoModel::getInstance()->getOne(array('where'=>array('uuid'=>$val['sick_uuid'])));
+//                //todo: 考虑多级疾病情况，可先不实现
+//                if($sicknao['sick_parent']==0){
+//                    $res=SicksPara66naoModel::getInstance()->getList(array('where'=>array('sick_uuid'=>$val['sick_uuid'])));
+//                    //todo: 数组合并不用foreach
+//                    foreach ($res as $kkk=>$vvv){
+//                    $result[]=$vvv;
+//                    }
+//                }else{
+//                    $li=Sicks66naoModel::getInstance()->getOne(array('where'=>array('id'=>$sicknao['sick_parent'])));
+//                    $res=SicksPara66naoModel::getInstance()->getList(array('where'=>array('sick_uuid'=>$val['sick_uuid'])));
+//                    $resu=SicksPara66naoModel::getInstance()->getList(array('where'=>array('sick_uuid'=>$li['uuid'])));
+//                    foreach ($resu as $keyy=>$valuee){
+//                        $result[]=$valuee;
+//                    }
+//                    foreach ($res as $kkk=>$vvv){
+//                        $result[]=$vvv;
+//                    }
+//                }
+//             }else{
+//                 $sickex=SicksExModel::getInstance()->getOne(array('where'=>array('uuid'=>$val['sick_uuid'])));
+//                 if($sickex['sick_parent']==0){
+//                     $resul=SicksParaExModel::getInstance()->getList(array('where'=>array('sick_uuid'=>$val['sick_uuid'])));
+//                     foreach ($resul as $jk=>$zv){
+//                         $result[]=$zv;
+//                     }
+//                 }else{
+//                     $lis=SicksExModel::getInstance()->getOne(array('where'=>array('id'=>$sickex['sick_parent'])));
+//                     $resex=SicksParaExModel::getInstance()->getList(array('where'=>array('sick_uuid'=>$val['sick_uuid'])));
+//                     $resultt=SicksParaExModel::getInstance()->getList(array('where'=>array('sick_uuid'=>$lis['uuid'])));
+//                     foreach ($resultt as $jik=>$zhv){
+//                         $result[]=$zhv;
+//                     }
+//                     foreach ($resex as $jkk=>$zvv){
+//                         $result[]=$zvv;
+//                     }
+//                 }
+//             }
+//         }
+// //print_r( $result);die;
+//         return $result;
+//     }
+    
+    function aa()
+    {
+      echo  DIRECTORY_SEPARATOR;
+    }
+    
+    /**
+     * 系统添加疾病
+     * @param  array  $arg [添加内容]
+     * @param  array  $op  [操作ID]
+     * @return [type]      [description]
+     */
+    function addsickssystem($arg = array(),$op=array()){
+        $arg['org_id']=0;
+        $arg['op_id'] = isset($op['id'])?$op['id']:0;
+            if($arg['sick_conflict']){
+                $arg['sick_conflict']=(count($arg['sick_conflict'])<1)?array():$arg['sick_conflict'];
+            foreach($arg['sick_conflict'] as $v){
+                $getsickinfo[]=SicksServices::getonesicks66nao(array('where'=>array('id'=>$v)));
+            }
+            foreach($getsickinfo as $k){
+                $arr[]=array(
+                $k['id']=>array($k['id'],$k['uuid']));
+            }
+            $arr=json_encode($arr);
+            $arg['sick_conflict']=$arr;
+            }
+        $results = Sicks66naoModel::getInstance()->add($arg);
+        return $results;
+
+    }
+    /**
+     * 疾病范式 添加
+     * @date: 2015/10/26
+     *  @author: 李杨
+     * [addsick_parasystem description]
+     * @param  array  $arg [添加内容]
+     * @return [type]      [description]
+     */
+    function addsick_parasystem($arg = array()){
+        //$arg['sick_para']=json_encode($arg['sick_para']);
+        $result = Sickpara66naoModel::getInstance()->add($arg);
+        return $result;
+
+    }
+    function delsick_parasystem($sid){
+        $result = Sickpara66naoModel::getInstance()->delete(array(
+            'sick_id' => $sid));
+
+    }
+    /**
+     * 疾病编辑
+     *@date: 2015/10/26
+     * @author: 李杨
+     * [editsicksystem description]
+     * @param  [type] $sid  [当前id]
+     * @param  [type] $data [name值]
+     * @param  [type] $op   [操作id]
+     * @return [type]       [description]
+     */
+    function editsickssystem($sid,$data,$op){
+        if (!$data) {
+            return false;
+        }
+        $data['op_id']=isset($op['id'])?$op['id']:0;
+        //echo $sid;
+        //print_r($data);die;
+        $result=Sicks66naoModel::getInstance()->update($data,array('id'=>$sid));
+        //print_r($result);die;
+        return $result;
+
+    }
+    /**
+     * 编辑疾病对应的范式
+     * @date: 2015/10/29
+     *  @author: 李杨
+     * [editsick_parasystem description]
+     * @param  [type] $sid  [description]
+     * @param  [type] $data [description]
+     * @return [type]       [description]
+     */
+    function editsick_parasystem($sid,$data){
+        if (!$data) {
+            return false;
+        }
+        $result = Sickpara66naoModel::getInstance()->update($data,array('sick_id'=>$sid));
+        return $result;
+    }
+    /**
+     * scaledelete删除量表
+     *
+     * @param mixed $id
+     *            Description. 量表id
+     *
+     * @access public
+     *
+     * @return mixed Value. boolean
+     */
+    function systemdelete($sid){
+        $sm=AssesscommonscaleinfoModel::getInstance();
+        return $sm->update(array('ISDELETED'=>1),array('ID'=>$sid));
+    }
+      /**
+     * 获取患者必选范式
+     * @date: 2015年10月23日
+     * 
+     * @author : 段正强
+     * @return :
+     */
+    function usersickpara($userid)
+    {
+        $result = array();
+        $uuid = array();
+        $list = UserSicksModel::getInstance()->getList(array(
+            'where' => array(
+                'user_id' => $userid
+            )
+        ));
+        $re = Sicks66naoModel::getInstance()->getList();
+        foreach ($re as $key => $value) {
+            $uuid[] = $value['uuid'];
+        }
+        foreach ($list as $ke => $val) {
+            if (in_array($val['sick_uuid'], $uuid)) {
+                $sicknao = Sicks66naoModel::getInstance()->getOne(array(
+                    'where' => array(
+                        'uuid' => $val['sick_uuid']
+                    )
+                ));
+                if ($sicknao['sick_parent'] == 0) {
+                    $res = SicksPara66naoModel::getInstance()->getList(array(
+                        'where' => array(
+                            'sick_uuid' => $val['sick_uuid']
+                        )
+                    ));
+                   
+                    $result = array_merge($result, $res);
+                } else {
+                    $li = Sicks66naoModel::getInstance()->getOne(array(
+                        'where' => array(
+                            'uuid' => $sicknao['sick_parent_uuid']
+                        )
+                    ));
+                    $res = SicksPara66naoModel::getInstance()->getList(array(
+                        'where' => array(
+                            'sick_uuid' => $val['sick_uuid']
+                        )
+                    ));
+                    $resu = SicksPara66naoModel::getInstance()->getList(array(
+                        'where' => array(
+                            'sick_uuid' => $li['uuid']
+                        )
+                    ));
+                   
+                    $result = array_merge($result, $resu, $res);
+                }
+            } else {
+                $sickex = SicksExModel::getInstance()->getOne(array(
+                    'where' => array(
+                        'uuid' => $val['sick_uuid']
+                    )
+                ));
+                if ($sickex['sick_parent'] == 0) {
+                    $resul = SicksParaExModel::getInstance()->getList(array(
+                        'where' => array(
+                            'sick_uuid' => $val['sick_uuid']
+                        )
+                    ));
+                    
+                    $result = array_merge($result, $resul);
+                } else {
+                    
+                    $lis = SicksExModel::getInstance()->getOne(array(
+                        'where' => array(
+                            'uuid' => $sickex['sick_parent_uuid']
+                        )
+                    ));
+                    $resex = SicksParaExModel::getInstance()->getList(array(
+                        'where' => array(
+                            'sick_uuid' => $val['sick_uuid']
+                        )
+                    ));
+                    $resultt = SicksParaExModel::getInstance()->getList(array(
+                        'where' => array(
+                            'sick_uuid' => $lis['uuid']
+                        )
+                    ));
+                   
+                    $result = array_merge($result, $resultt, $resex);
+                }
+            }
+        }
+        if (! $result) {
+            return false;
+        }
+        foreach ($result as $a) {
+            $a = implode(',', $a);
+            $temp[] = $a;
+        }
+        $temp = array_unique($temp);
+        foreach ($temp as $jian => $value) {
+            $jieguo[] = explode(',', $value);
+        }
+       //print_r($jieguo);die;
+        return $jieguo;
+    }
+
+}
