@@ -28,3 +28,6 @@ http://www.w3cfuns.com/notes/17942/c6feb528d5cea0b68e3b82139f5ca2c0.html      �
 http://www.phpcomposer.com/
 
 ?Linus，一生只为寻找欢笑
+
+
+http://blog.csdn.net/xiaowall/article/details/7872503  fget获取文件
