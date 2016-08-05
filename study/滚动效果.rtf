@@ -1,0 +1,190 @@
+{\rtf1\ansi\deff0{\fonttbl{\f0\fnil\fcharset134 \'cb\'ce\'cc\'e5;}}
+{\colortbl ;\red0\green0\blue255;}
+{\*\generator Msftedit 5.41.21.2510;}\viewkind4\uc1\pard\sa200\sl240\slmult1\lang2052\f0\fs22 <head>\par
+<style type="text/css">\par
+#container\{\par
+text-align: left;\par
+background-color: #faf7ec;\par
+width: 500px;\par
+margin: 20px auto 0 auto;\par
+padding: 0;\par
+font-family:Arial, Helvetica, sans-serif;\par
+font-size:12px;\par
+\}\par
+#block0, #block1, #block2, #block3, #block4, #block5 \{\par
+border-top: solid 1px #785a3c;\par
+margin: 0;\par
+padding: 10px;\par
+\}\par
+.active \{\par
+background-color: #fff;\par
+\}\par
+.visited \{\par
+background-color: #ede7da;\par
+\}\par
+#block0, #block0.active, #block0.visited \{\par
+text-align: center;\par
+background-color: #a0dcf8;\par
+border-top: none;\par
+border-bottom: solid 4px #785a3c;\par
+\}\par
+</style>\par
+<script>\par
+var ScrollWin = \{\par
+w3c : document.getElementById,\par
+iex : document.all,\par
+scrollLoop : false,\par
+scrollInterval : null, // setInterval id\par
+currentBlock : null,   // object reference\par
+getWindowHeight : function()\{\par
+if(this.iex) return (document.documentElement.clientHeight) ?\par
+document.documentElement.clientHeight : document.body.clientHeight;\par
+else return window.innerHeight;\par
+\},\par
+getScrollLeft : function()\{\par
+if(this.iex) return (document.documentElement.scrollLeft) ?\par
+document.documentElement.scrollLeft : document.body.scrollLeft;\par
+else return window.pageXOffset;\par
+\},\par
+getScrollTop : function()\{\par
+if(this.iex) return (document.documentElement.scrollTop) ?\par
+document.documentElement.scrollTop : document.body.scrollTop;\par
+else return window.pageYOffset;\par
+\},\par
+getElementYpos : function(el)\{\par
+var y = 0;\par
+while(el.offsetParent)\{\par
+y += el.offsetTop\par
+el = el.offsetParent;\par
+\}//\'bb\'b6\'d3\'ad\'c0\'b4\'b5\'bd\'d5\'be\'b3\'a4\'cc\'d8\'d0\'a7\'cd\'f8\'a3\'ac\'ce\'d2\'c3\'c7\'b5\'c4\'cd\'f8\'d6\'b7\'ca\'c7{\field{\*\fldinst{HYPERLINK "www.zzjs.net"}}{\fldrslt{\ul\cf1 www.zzjs.net}}}\f0\fs22\'a3\'ac\'ba\'dc\'ba\'c3\'bc\'c7\'a3\'aczz\'d5\'be\'b3\'a4\'a3\'acjs\'be\'cd\'ca\'c7js\'cc\'d8\'d0\'a7\'a3\'ac\'b1\'be\'d5\'be\'ca\'d5\'bc\'af\'b4\'f3\'c1\'bf\'b8\'df\'d6\'ca\'c1\'bfjs\'b4\'fa\'c2\'eb\'a3\'ac\'bb\'b9\'d3\'d0\'d0\'ed\'b6\'e0\'b9\'e3\'b8\'e6\'b4\'fa\'c2\'eb\'cf\'c2\'d4\'d8\'a1\'a3\par
+return y;\par
+\},\par
+scroll : function(num)\{\par
+if(!this.w3c)\{\par
+location.href = "#"+this.anchorName+num;\par
+return;\par
+\}\par
+if(this.scrollLoop)\{\par
+clearInterval(this.scrollInterval);\par
+this.scrollLoop = false;\par
+this.scrollInterval = null;\par
+\}//\'bb\'b6\'d3\'ad\'c0\'b4\'b5\'bd\'d5\'be\'b3\'a4\'cc\'d8\'d0\'a7\'cd\'f8\'a3\'ac\'ce\'d2\'c3\'c7\'b5\'c4\'cd\'f8\'d6\'b7\'ca\'c7{\field{\*\fldinst{HYPERLINK "www.zzjs.net"}}{\fldrslt{\ul\cf1 www.zzjs.net}}}\f0\fs22\'a3\'ac\'ba\'dc\'ba\'c3\'bc\'c7\'a3\'aczz\'d5\'be\'b3\'a4\'a3\'acjs\'be\'cd\'ca\'c7js\'cc\'d8\'d0\'a7\'a3\'ac\'b1\'be\'d5\'be\'ca\'d5\'bc\'af\'b4\'f3\'c1\'bf\'b8\'df\'d6\'ca\'c1\'bfjs\'b4\'fa\'c2\'eb\'a3\'ac\'bb\'b9\'d3\'d0\'d0\'ed\'b6\'e0\'b9\'e3\'b8\'e6\'b4\'fa\'c2\'eb\'cf\'c2\'d4\'d8\'a1\'a3\par
+if(this.currentBlock != null) this.currentBlock.className = this.offClassName;\par
+this.currentBlock = document.getElementById(this.blockName+num);\par
+this.currentBlock.className = this.onClassName;\par
+var doc = document.getElementById(this.containerName);\par
+var documentHeight = this.getElementYpos(doc) + doc.offsetHeight;\par
+var windowHeight = this.getWindowHeight();\par
+var ypos = this.getElementYpos(this.currentBlock);\par
+if(ypos > documentHeight - windowHeight) ypos = documentHeight - windowHeight;\par
+this.scrollTo(0,ypos);\par
+\},\par
+scrollTo : function(x,y)\{\par
+if(this.scrollLoop)\{\par
+var left = this.getScrollLeft();\par
+var top = this.getScrollTop();\par
+if(Math.abs(left-x) <= 1 && Math.abs(top-y) <= 1)\{\par
+window.scrollTo(x,y);\par
+clearInterval(this.scrollInterval);\par
+this.scrollLoop = false;\par
+this.scrollInterval = null;\par
+\}else\{\par
+window.scrollTo(left+(x-left)/10, top+(y-top)/10);\par
+\}//\'bb\'b6\'d3\'ad\'c0\'b4\'b5\'bd\'d5\'be\'b3\'a4\'cc\'d8\'d0\'a7\'cd\'f8\'a3\'ac\'ce\'d2\'c3\'c7\'b5\'c4\'cd\'f8\'d6\'b7\'ca\'c7{\field{\*\fldinst{HYPERLINK "www.zzjs.net"}}{\fldrslt{\ul\cf1 www.zzjs.net}}}\f0\fs22\'a3\'ac\'ba\'dc\'ba\'c3\'bc\'c7\'a3\'aczz\'d5\'be\'b3\'a4\'a3\'acjs\'be\'cd\'ca\'c7js\'cc\'d8\'d0\'a7\'a3\'ac\'b1\'be\'d5\'be\'ca\'d5\'bc\'af\'b4\'f3\'c1\'bf\'b8\'df\'d6\'ca\'c1\'bfjs\'b4\'fa\'c2\'eb\'a3\'ac\'bb\'b9\'d3\'d0\'d0\'ed\'b6\'e0\'b9\'e3\'b8\'e6\'b4\'fa\'c2\'eb\'cf\'c2\'d4\'d8\'a1\'a3\par
+\}else\{\par
+this.scrollInterval = setInterval("ScrollWin.scrollTo("+x+","+y+")",20);\par
+this.scrollLoop = true;\par
+\}\par
+\}//\'bb\'b6\'d3\'ad\'c0\'b4\'b5\'bd\'d5\'be\'b3\'a4\'cc\'d8\'d0\'a7\'cd\'f8\'a3\'ac\'ce\'d2\'c3\'c7\'b5\'c4\'cd\'f8\'d6\'b7\'ca\'c7{\field{\*\fldinst{HYPERLINK "www.zzjs.net"}}{\fldrslt{\ul\cf1 www.zzjs.net}}}\f0\fs22\'a3\'ac\'ba\'dc\'ba\'c3\'bc\'c7\'a3\'aczz\'d5\'be\'b3\'a4\'a3\'acjs\'be\'cd\'ca\'c7js\'cc\'d8\'d0\'a7\'a3\'ac\'b1\'be\'d5\'be\'ca\'d5\'bc\'af\'b4\'f3\'c1\'bf\'b8\'df\'d6\'ca\'c1\'bfjs\'b4\'fa\'c2\'eb\'a3\'ac\'bb\'b9\'d3\'d0\'d0\'ed\'b6\'e0\'b9\'e3\'b8\'e6\'b4\'fa\'c2\'eb\'cf\'c2\'d4\'d8\'a1\'a3\par
+\};\par
+ScrollWin.containerName = "container";\par
+ScrollWin.anchorName    = "anchor";\par
+ScrollWin.blockName     = "block";\par
+ScrollWin.onClassName   = "active";\par
+ScrollWin.offClassName  = "visited";\par
+</script>\par
+</head>\par
+<body>\par
+<a href="http://www.zzjs.net/">\'d5\'be\'b3\'a4\'cc\'d8\'d0\'a7\'cd\'f8</a>,\'d5\'be\'b3\'a4\'b1\'d8\'b1\'b8\'b5\'c4\'b8\'df\'d6\'ca\'c1\'bf\'cd\'f8\'d2\'b3\'cc\'d8\'d0\'a7\'ba\'cd\'b9\'e3\'b8\'e6\'b4\'fa\'c2\'eb\'a1\'a3zzjs.net\'a3\'ac\'d5\'be\'b3\'a4js\'cc\'d8\'d0\'a7\'a1\'a3<hr>\par
+<!--\'bb\'b6\'d3\'ad\'c0\'b4\'b5\'bd\'d5\'be\'b3\'a4\'cc\'d8\'d0\'a7\'cd\'f8\'a3\'ac\'ce\'d2\'c3\'c7\'cd\'f8\'d5\'be\'ca\'d5\'bc\'af\'b4\'f3\'c1\'bf\'b8\'df\'d6\'ca\'c1\'bfjs\'cc\'d8\'d0\'a7\'a3\'ac\'cc\'e1\'b9\'a9\'d0\'ed\'b6\'e0\'b9\'e3\'b8\'e6\'b4\'fa\'c2\'eb\'cf\'c2\'d4\'d8\'a3\'ac\'cd\'f8\'d6\'b7\'a3\'ba{\field{\*\fldinst{HYPERLINK "www.zzjs.net"}}{\fldrslt{\ul\cf1 www.zzjs.net}}}\f0\fs22\'a3\'aczzjs@msn.com,\'d3\'c3.net\'b4\'f2\'d4\'ec\'f6\'a6\'d5\'be-->\par
+<script type="text/javascript" src="http://www.zzjs.net/ad/tc.js"></script>\par
+<div align="center">\par
+<div id="container">\par
+<a name="anchor0"></a>\par
+<div id="block0">\par
+<a href="javascript:ScrollWin.scroll('1')">\'c1\'b4\'bd\'d3 1</a> |\par
+<a href="javascript:ScrollWin.scroll('2')">\'c1\'b4\'bd\'d3 2</a> |\par
+<a href="javascript:ScrollWin.scroll('3')">\'c1\'b4\'bd\'d3 3</a> |\par
+<a href="javascript:ScrollWin.scroll('4')">\'c1\'b4\'bd\'d3 4</a> |\par
+<a href="javascript:ScrollWin.scroll('5')">\'c1\'b4\'bd\'d3 5</a>\par
+</div>\par
+<a name="anchor1"></a>\par
+<div id="block1">\par
+<h3><a href="#" onclick="javascript:ScrollWin.scroll('0'); return false;">\'b6\'a5\'b2\'bf</a>\par
+\'c1\'b4\'bd\'d3 1</h3>\par
+<p>\'c4\'da\'c8\'dd</p>\par
+<p>\'c4\'da\'c8\'dd</p>\par
+<p>\'c4\'da\'c8\'dd</p>\par
+<p>\'c4\'da\'c8\'dd</p>\par
+<p>\'c4\'da\'c8\'dd</p>\par
+<p>\'c4\'da\'c8\'dd</p>\par
+<p>\'c4\'da\'c8\'dd</p>\par
+<p>\'c4\'da\'c8\'dd</p>\par
+</div>\par
+<a name="anchor2"></a>\par
+<div id="block2">\par
+<h3><a href="#" onclick="javascript:ScrollWin.scroll('0'); return false;">\'b6\'a5\'b2\'bf</a>\par
+\'c1\'b4\'bd\'d3 2</h3>\par
+<p>\'c4\'da\'c8\'dd</p>\par
+<p>\'c4\'da\'c8\'dd</p>\par
+<p>\'c4\'da\'c8\'dd</p>\par
+<p>\'c4\'da\'c8\'dd</p>\par
+<p>\'c4\'da\'c8\'dd</p>\par
+<p>\'c4\'da\'c8\'dd</p>\par
+<p>\'c4\'da\'c8\'dd</p>\par
+<p>\'c4\'da\'c8\'dd</p>\par
+</div>\par
+<a name="anchor3"></a>\par
+<div id="block3">\par
+<h3><a href="#" onclick="javascript:ScrollWin.scroll('0'); return false;">\'b6\'a5\'b2\'bf</a>\par
+\'c1\'b4\'bd\'d3 3</h3>\par
+<p>\'c4\'da\'c8\'dd</p>\par
+<p>\'c4\'da\'c8\'dd</p>\par
+<p>\'c4\'da\'c8\'dd</p>\par
+<p>\'c4\'da\'c8\'dd</p>\par
+<p>\'c4\'da\'c8\'dd</p>\par
+<p>\'c4\'da\'c8\'dd</p>\par
+<p>\'c4\'da\'c8\'dd</p>\par
+<p>\'c4\'da\'c8\'dd</p>\par
+</div>\par
+<a name="anchor4"></a>\par
+<div id="block4">\par
+<h3><a href="#" onclick="javascript:ScrollWin.scroll('0'); return false;">\'b6\'a5\'b2\'bf</a>\par
+\'c1\'b4\'bd\'d3 4</h3>\par
+<p>\'c4\'da\'c8\'dd</p>\par
+<p>\'c4\'da\'c8\'dd</p>\par
+<p>\'c4\'da\'c8\'dd</p>\par
+<p>\'c4\'da\'c8\'dd</p>\par
+<p>\'c4\'da\'c8\'dd</p>\par
+<p>\'c4\'da\'c8\'dd</p>\par
+<p>\'c4\'da\'c8\'dd</p>\par
+<p>\'c4\'da\'c8\'dd</p>\par
+</div>\par
+<a name="anchor5"></a>\par
+<div id="block5">\par
+<h3><a href="#" onclick="javascript:ScrollWin.scroll('0'); return false;">\'b6\'a5\'b2\'bf</a>\par
+\'c1\'b4\'bd\'d3 5</h3>\par
+<p>\'c4\'da\'c8\'dd</p>\par
+<p>\'c4\'da\'c8\'dd</p>\par
+<p>\'c4\'da\'c8\'dd</p>\par
+<p>\'c4\'da\'c8\'dd</p>\par
+<p>\'c4\'da\'c8\'dd</p>\par
+<p>\'c4\'da\'c8\'dd</p>\par
+<p>\'c4\'da\'c8\'dd</p>\par
+<p>\'c4\'da\'c8\'dd</p>\par
+</div>\par
+</div>\par
+</div>\par
+</body>\par
+}
+ 
